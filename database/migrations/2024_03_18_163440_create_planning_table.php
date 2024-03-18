@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('planning', function (Blueprint $table) {
             $table->id();
             $table->foreignId('staff_id')->constrained('staff');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('date');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->string('status');
             $table->string('type');
+            $table->string('task');
+            $table->string('status')->default('En attente');
             $table->timestamps();
         });
     }
