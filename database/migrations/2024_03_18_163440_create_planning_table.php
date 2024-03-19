@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('end_time');
             $table->string('status');
             $table->string('type');
+            $table->string('priority')->default('Normal'); // les valeurs possibles sont Normal, Urgent, Très urgent
             $table->string('task');
             $table->string('status')->default('En attente');
             $table->timestamps();
