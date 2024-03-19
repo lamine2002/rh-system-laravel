@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('planning', function (Blueprint $table) {
             $table->id();
             $table->foreignId('staff_id')->nullable()->constrained('staff');
-            $table->foreignId('team_id')->nullable()->constrained('team');
+            $table->foreignId('team_id')->nullable()->constrained('teams');
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->string('status');
             $table->string('type');
             $table->string('priority')->default('Normal'); // les valeurs possibles sont Normal, Urgent, Très urgent
             $table->string('task');

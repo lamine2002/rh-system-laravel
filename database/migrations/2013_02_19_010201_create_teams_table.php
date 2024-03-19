@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->foreignId('leader_id')->constrained('staff');
-            $table->foreignId('supervisor_id')->constrained('staff');
+            $table->unsignedBigInteger('leader_id');
+            $table->unsignedBigInteger('supervisor_id');
             $table->timestamps();
         });
     }
