@@ -11,4 +11,17 @@ class AbsenceController extends Controller
     {
         $this->authorizeResource(Absence::class);
     }
+
+    public function index()
+    {
+        $absences = Absence::all();
+        return view('absences.index', compact('absences'));
+    }
+
+    public function create()
+    {
+        return view('absences.create');
+    }
+
+
 }
