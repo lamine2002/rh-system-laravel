@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class TalentType extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function talents()
+    {
+        return $this->hasMany(Talent::class);
+    }
+
+
 }

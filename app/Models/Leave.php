@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Leave extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class);
+    }
 }
