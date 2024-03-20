@@ -14,7 +14,7 @@
                 <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                     <div class="w-full">
                         <h1 class="text-center mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200">Se Connecter</h1>
-                        <form action="{{--{{ route('login') }}--}}" method="POST">
+                        <form action="{{ route('login') }}" method="POST">
                             @csrf
                             <label class="block text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Email</span>
@@ -26,7 +26,7 @@
                             </label>
                             <button type="submit" class="block w-full px-4 py-2 mt-6 text-sm font-semibold text-center text-white bg-blue-600 rounded-lg dark:bg-primary-dark hover:bg-blue-500 focus:outline-none focus:ring">Se Connecter</button>
                         </form>
-                        <a href="{{ url()->previous() }}" class="block w-full px-4 py-2 mt-6 text-sm font-semibold text-center text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring">Retour</a>
+                        <a href="/" class="block w-full px-4 py-2 mt-6 text-sm font-semibold text-center text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring">Retour</a>
                     </div>
                 </div>
             </div>

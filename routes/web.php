@@ -14,6 +14,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('login.login');
+    // creer un utilisateur avec un role admin
+//    \App\Models\User::create([
+//        'name' => 'admin',
+//        'email' => 'admin@gmail.com',
+//        'password' => \Illuminate\Support\Facades\Hash::make('passer'),
+//        'role' => 'admin'
+//        ]);
+    return view('welcome');
 
 });
+
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'login'])
+    ->name('login')
+    ->middleware('guest');
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'doLogin']);
+Route::delete('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])
+    ->name('logout')
+    ->middleware('auth');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');
+
