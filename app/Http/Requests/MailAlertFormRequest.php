@@ -11,7 +11,7 @@ class MailAlertFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class MailAlertFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'type' => 'required|string',
+            'staff_id' => 'required|integer',
+            'message' => 'required|string',
         ];
     }
 }

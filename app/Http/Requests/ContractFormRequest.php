@@ -11,7 +11,7 @@ class ContractFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class ContractFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'staff_id' => 'required|exists:staff,id',
+            'contract_type' => 'required|string',
+            'start_date' => 'required|date|before_or_equal:end_date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'object' => 'required|string',
+            'status' => 'required|string',
+            'description' => 'nullable|string',
+            'signed_by' => 'nullable|exists:staff,id',
         ];
     }
 }

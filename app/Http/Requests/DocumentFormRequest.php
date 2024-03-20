@@ -11,7 +11,7 @@ class DocumentFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class DocumentFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'file' => 'required|file|max:10240',
+            'type' => 'required|string|max:255',
+            'staff_id' => 'required|exists:staff,id'
         ];
     }
 }

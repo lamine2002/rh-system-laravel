@@ -11,7 +11,7 @@ class PlanningFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class PlanningFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'staff_id' => 'required|integer',
+            'team_id' => 'required|integer',
+            'date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
+            'type' => 'required|string',
+            'priority' => 'required|string|in:Normal,Urgent,Très urgent',
+            'task' => 'required|string',
+            'status' => 'required|string|in:En attente,En cours,Clôturée',
         ];
     }
 }

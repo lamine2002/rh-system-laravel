@@ -11,7 +11,7 @@ class LeaveFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class LeaveFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'staff_id' => 'required|exists:staff,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'status' => 'required|string',
+            'type' => 'required|string',
         ];
     }
 }
