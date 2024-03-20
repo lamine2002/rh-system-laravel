@@ -11,17 +11,23 @@ class AbsencePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        //
+        return $user->role('admin') || $user->role('manager')
+            ? Response::allow()
+            : Response::deny('You are not authorized to view absences.');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Absence $absence): bool
+    public function view(User $user, Absence $absence): Response
     {
-        //
+        return ($user->role === 'admin' || $user->role === 'manager')
+            ? Response::allow()
+            : (($user->staff_id === $absence->staff_id)
+                ? Response::allow()
+                : Response::deny('You are not authorized to view this absence.'));
     }
 
     /**
@@ -29,7 +35,7 @@ class AbsencePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +43,7 @@ class AbsencePolicy
      */
     public function update(User $user, Absence $absence): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager' || ($user->staff_id === $absence->staff_id && $absence->status === 'En attente');
     }
 
     /**
@@ -45,7 +51,7 @@ class AbsencePolicy
      */
     public function delete(User $user, Absence $absence): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager' || ($user->staff_id === $absence->staff_id && $absence->status === 'En attente');
     }
 
     /**
@@ -53,7 +59,7 @@ class AbsencePolicy
      */
     public function restore(User $user, Absence $absence): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 
     /**
@@ -61,6 +67,6 @@ class AbsencePolicy
      */
     public function forceDelete(User $user, Absence $absence): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 }
