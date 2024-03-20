@@ -13,7 +13,7 @@ class MailAlertPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager');
     }
 
     /**
@@ -21,7 +21,7 @@ class MailAlertPolicy
      */
     public function view(User $user, MailAlert $mailAlert): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager') || $user->staff_id === $mailAlert->staff_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class MailAlertPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager' || $user->role === 'staff';
     }
 
     /**
@@ -37,7 +37,7 @@ class MailAlertPolicy
      */
     public function update(User $user, MailAlert $mailAlert): bool
     {
-        //
+        return $user->staff_id === $mailAlert->staff_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class MailAlertPolicy
      */
     public function delete(User $user, MailAlert $mailAlert): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +53,7 @@ class MailAlertPolicy
      */
     public function restore(User $user, MailAlert $mailAlert): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager');
     }
 
     /**
@@ -61,6 +61,6 @@ class MailAlertPolicy
      */
     public function forceDelete(User $user, MailAlert $mailAlert): bool
     {
-        //
+        return false;
     }
 }

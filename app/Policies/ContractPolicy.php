@@ -11,17 +11,23 @@ class ContractPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        //
+        return $user->role('admin') || $user->role('manager')
+            ? Response::allow()
+            : Response::deny('You are not authorized to view contracts.');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Contract $contract): bool
+    public function view(User $user, Contract $contract): Response
     {
-        //
+        return ($user->role === 'admin' || $user->role === 'manager')
+            ? Response::allow()
+            : (($user->staff_id === $contract->staff_id)
+                ? Response::allow()
+                : Response::deny('You are not authorized to view this contract.'));
     }
 
     /**
@@ -29,7 +35,7 @@ class ContractPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 
     /**
@@ -37,7 +43,7 @@ class ContractPolicy
      */
     public function update(User $user, Contract $contract): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 
     /**
@@ -45,7 +51,7 @@ class ContractPolicy
      */
     public function delete(User $user, Contract $contract): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +59,7 @@ class ContractPolicy
      */
     public function restore(User $user, Contract $contract): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 
     /**
@@ -61,6 +67,6 @@ class ContractPolicy
      */
     public function forceDelete(User $user, Contract $contract): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 }

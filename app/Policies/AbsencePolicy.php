@@ -43,7 +43,7 @@ class AbsencePolicy
      */
     public function update(User $user, Absence $absence): bool
     {
-        return $user->role === 'admin' || $user->role === 'manager' || ($user->staff_id === $absence->staff_id && $absence->status === 'En attente');
+        return ($user->role === 'admin' || $user->role === 'manager' || ($user->staff_id === $absence->staff_id && $absence->status === 'En attente'));
     }
 
     /**
@@ -51,7 +51,7 @@ class AbsencePolicy
      */
     public function delete(User $user, Absence $absence): bool
     {
-        return $user->role === 'admin' || $user->role === 'manager' || ($user->staff_id === $absence->staff_id && $absence->status === 'En attente');
+        return $absence->status === 'En attente' && ($user->role === 'admin' || $user->role === 'manager' || $user->staff_id === $absence->staff_id);
     }
 
     /**

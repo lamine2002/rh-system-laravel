@@ -13,7 +13,7 @@ class DocumentPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager');
     }
 
     /**
@@ -21,7 +21,7 @@ class DocumentPolicy
      */
     public function view(User $user, Document $document): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager') || $user->staff_id === $document->staff_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class DocumentPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class DocumentPolicy
      */
     public function update(User $user, Document $document): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager') || $user->staff_id === $document->staff_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class DocumentPolicy
      */
     public function delete(User $user, Document $document): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -53,7 +53,7 @@ class DocumentPolicy
      */
     public function restore(User $user, Document $document): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager');
     }
 
     /**
@@ -61,6 +61,6 @@ class DocumentPolicy
      */
     public function forceDelete(User $user, Document $document): bool
     {
-        //
+        return false;
     }
 }

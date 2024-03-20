@@ -41,4 +41,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function team () {
+        return Team::query()->where('leader_id', $this->staff_id)->orWhere('supervisor_id', $this->staff_id)->first();
+    }
+
+    public function staff () {
+        return Staff::query()->where('id', $this->staff_id)->first();
+    }
 }

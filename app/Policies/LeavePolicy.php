@@ -13,7 +13,7 @@ class LeavePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager');
     }
 
     /**
@@ -21,7 +21,7 @@ class LeavePolicy
      */
     public function view(User $user, Leave $leave): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager') || $user->staff_id === $leave->staff_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class LeavePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class LeavePolicy
      */
     public function update(User $user, Leave $leave): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager') || ($user->staff_id === $leave->staff_id && $leave->status === 'En attente');
     }
 
     /**
@@ -45,7 +45,7 @@ class LeavePolicy
      */
     public function delete(User $user, Leave $leave): bool
     {
-        //
+        return $leave->status === 'En attente' && ($user->role('admin') || $user->role('manager') || $user->staff_id === $leave->staff_id);
     }
 
     /**
@@ -53,7 +53,7 @@ class LeavePolicy
      */
     public function restore(User $user, Leave $leave): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager');
     }
 
     /**
@@ -61,6 +61,6 @@ class LeavePolicy
      */
     public function forceDelete(User $user, Leave $leave): bool
     {
-        //
+        return $user->role('admin') || $user->role('manager');
     }
 }

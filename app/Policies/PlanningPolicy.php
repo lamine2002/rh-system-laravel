@@ -13,7 +13,7 @@ class PlanningPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 
     /**
@@ -21,7 +21,7 @@ class PlanningPolicy
      */
     public function view(User $user, Planning $planning): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager' || $user->staff_id === $planning->staff_id || $user->staff_id === $planning->team()->leader_id || $user->staff_id === $planning->team()->supervisor_id;
     }
 
     /**
@@ -29,7 +29,8 @@ class PlanningPolicy
      */
     public function create(User $user): bool
     {
-        //
+        // voir si l'utilisateur est un leader ou un superviseur
+        return $user->role === 'admin' || $user->role === 'manager' || $user->team()->leader_id === $user->staff_id || $user->team()->supervisor_id === $user->staff_id;
     }
 
     /**
@@ -37,7 +38,7 @@ class PlanningPolicy
      */
     public function update(User $user, Planning $planning): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager' || $user->staff_id === $planning->staff_id || $user->staff_id === $planning->team()->leader_id || $user->staff_id === $planning->team()->supervisor_id;
     }
 
     /**
@@ -45,7 +46,7 @@ class PlanningPolicy
      */
     public function delete(User $user, Planning $planning): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager' || $user->staff_id === $planning->staff_id || $user->staff_id === $planning->team()->leader_id || $user->staff_id === $planning->team()->supervisor_id;
     }
 
     /**
@@ -53,7 +54,7 @@ class PlanningPolicy
      */
     public function restore(User $user, Planning $planning): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 
     /**
@@ -61,6 +62,6 @@ class PlanningPolicy
      */
     public function forceDelete(User $user, Planning $planning): bool
     {
-        //
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 }
