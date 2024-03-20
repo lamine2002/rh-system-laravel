@@ -38,4 +38,6 @@
         </div>
     </nav>
 
+    @yield('content')
+
 @endsection
