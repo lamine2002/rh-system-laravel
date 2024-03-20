@@ -128,7 +128,7 @@
 <div class="pl-12 pt-12 pr-4 sm:ml-64">
     <div class="p-4 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 mt-14">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-white text-center">Welcome to Flowbite</h2>
-        <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+        <div class="flex items-center justify-center p-4 h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
             @yield('content')
         </div>
     </div>
