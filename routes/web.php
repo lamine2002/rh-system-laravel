@@ -33,10 +33,12 @@ Route::delete('/logout', [\App\Http\Controllers\AuthController::class, 'logout']
     ->name('logout')
     ->middleware('auth');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware('auth')->name('dashboard');
 
 Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
-
+    Route::get('/home', function () {
+        return view('rh.home');
+    })->name('home');
 });

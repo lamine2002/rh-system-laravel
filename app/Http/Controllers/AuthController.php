@@ -18,13 +18,8 @@ class AuthController extends Controller
         $credentials = $request->validated();
         if (Auth::attempt($credentials)){
             $request->session()->regenerate();
-            // voir si l'utilisateur est un admin ou un manager
-            if (Auth::user()->role === 'admin') {
-                return redirect()->route('dashboard');
-            }elseif (Auth::user()->role === 'manager') {
-                return redirect()->route('dashboard');
-            }
-            return redirect()->route('welcome');
+
+            return redirect()->route('rh.home');
         }
         return back()->withErrors([
             'email' => 'Identifiants incorrect',
