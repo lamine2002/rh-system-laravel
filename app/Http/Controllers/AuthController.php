@@ -22,9 +22,9 @@ class AuthController extends Controller
             if (Auth::user()->role === 'admin') {
                 return redirect()->route('dashboard');
             }elseif (Auth::user()->role === 'manager') {
-                return redirect()->intended(route('dashboard'));
+                return redirect()->route('dashboard');
             }
-            return redirect()->intended(route('welcome'));
+            return redirect()->route('welcome');
         }
         return back()->withErrors([
             'email' => 'Identifiants incorrect',
