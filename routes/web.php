@@ -41,4 +41,15 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
     Route::get('/home', function () {
         return view('rh.home');
     })->name('home');
+
+    Route::resource('absences', \App\Http\Controllers\AbsenceController::class);
+    Route::resource('leave', \App\Http\Controllers\LeaveController::class);
+    Route::resource('contracts', \App\Http\Controllers\ContractController::class);
+    Route::resource('documents', \App\Http\Controllers\DocumentController::class);
+    Route::resource('mail-alerts', \App\Http\Controllers\MailAlertController::class);
+    Route::resource('planning', \App\Http\Controllers\PlanningController::class);
+    Route::resource('staff', \App\Http\Controllers\StaffController::class);
+    Route::resource('talent', \App\Http\Controllers\TalentController::class);
+    Route::resource('talent-type', \App\Http\Controllers\TalentTypeController::class);
+    Route::resource('team', \App\Http\Controllers\TeamController::class);
 });
