@@ -33,6 +33,7 @@ class StaffFormRequest extends FormRequest
             'chef_id' => 'nullable|exists:staff,id',
             'talents' => 'nullable|array',
             'status' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

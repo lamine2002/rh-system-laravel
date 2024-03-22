@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Staff extends Model
 {
@@ -63,5 +64,15 @@ class Staff extends Model
     public function subordinates()
     {
         return $this->hasMany(Staff::class, 'chef_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    public function imageUrl(): string
+    {
+        return Storage::disk('public')->url($this->image);
     }
 }

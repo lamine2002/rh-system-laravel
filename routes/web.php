@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-//     creer un utilisateur avec un role admin
+////     creer un utilisateur avec un role admin
 //    \App\Models\User::create([
 //        'name' => 'admin',
 //        'email' => 'admin@gmail.com',
@@ -22,7 +22,7 @@ Route::get('/', function () {
 //        'role' => 'admin',
 //        'staff_id' => 1
 //        ]);
-    // creer un staff
+    //// creer un staff
 //    \App\Models\Staff::create([
 //        'name' => 'Admin',
 //        'email' => 'admin@gmail.com',

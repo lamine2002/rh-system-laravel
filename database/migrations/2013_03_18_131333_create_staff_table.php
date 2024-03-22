@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('salary', 8, 2);
             $table->foreignId('team_id')->nullable()->constrained('teams');
             $table->string('status')->default('active');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
