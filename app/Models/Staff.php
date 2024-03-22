@@ -22,7 +22,7 @@ class Staff extends Model
 
     public function talents()
     {
-        return $this->belongsToMany(Talent::class, 'staff_talent')->withPivot('level');
+        return $this->belongsToMany(Talent::class, 'staff_talent');
     }
 
     public function documents()

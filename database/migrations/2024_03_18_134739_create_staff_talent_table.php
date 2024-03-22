@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('staff_id')->constrained('staff');
             $table->foreignId('talent_id')->constrained('talent');
-            $table->integer('level');
             $table->timestamps();
         });
     }

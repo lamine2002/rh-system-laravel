@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // creer un utilisateur avec un role admin
+//     creer un utilisateur avec un role admin
 //    \App\Models\User::create([
 //        'name' => 'admin',
 //        'email' => 'admin@gmail.com',
 //        'password' => \Illuminate\Support\Facades\Hash::make('passer'),
-//        'role' => 'admin'
+//        'role' => 'admin',
+//        'staff_id' => 1
 //        ]);
     // creer un staff
 //    \App\Models\Staff::create([

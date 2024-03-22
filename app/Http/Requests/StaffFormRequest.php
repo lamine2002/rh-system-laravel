@@ -30,6 +30,7 @@ class StaffFormRequest extends FormRequest
             'job_title' => 'required|string|max:255',
             'salary' => 'required|numeric',
             'team_id' => 'nullable|exists:teams,id',
+            'chef_id' => 'nullable|exists:staff,id',
         ];
     }
 }
