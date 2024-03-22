@@ -13,7 +13,7 @@ class AbsencePolicy
      */
     public function viewAny(User $user): Response
     {
-        return $user->role('admin') || $user->role('manager')
+        return $user->role == 'admin' || $user->role == 'manager'
             ? Response::allow()
             : Response::deny('You are not authorized to view absences.');
     }

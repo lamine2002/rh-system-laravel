@@ -21,6 +21,16 @@ Route::get('/', function () {
 //        'password' => \Illuminate\Support\Facades\Hash::make('passer'),
 //        'role' => 'admin'
 //        ]);
+    // creer un staff
+//    \App\Models\Staff::create([
+//        'name' => 'Admin',
+//        'email' => 'admin@gmail.com',
+//        'phone' => '123456789',
+//        'address' => '123 rue de la paix',
+//        'job_title' => 'Administrateur',
+//        'salary' => 600000,
+//        'date_of_birth' => '1990-01-01',
+//    ]);
     return view('welcome');
 
 });

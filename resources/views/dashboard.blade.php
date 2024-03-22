@@ -245,7 +245,7 @@
                 </button>
                 <ul id="dropdown-crud" class="space-y-2 py-2 hidden ">
                     <li>
-                        <a href="" class="bg-white text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700  bg-gray-100 dark:bg-gray-700 ">Products</a>
+                        <a href="{{ route('rh.absences.index') }}" class="bg-white text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700  bg-gray-100 dark:bg-gray-700 ">Absences</a>
                     </li>
                     <li>
                         <a href="" class="bg-white text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700  bg-gray-100 dark:bg-gray-700">Users</a>
@@ -297,7 +297,7 @@
             @yield('contents')
         </div>
 
-        <footer class=" mb-6 mt-12 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 xl:p-8 dark:bg-gray-800">
+        <footer class=" mb-6 mt-96 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 xl:p-8 dark:bg-gray-800">
             <ul class="flex flex-wrap items-center mb-6 space-y-1 md:mb-0">
                 <li><a href="#" class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Terms and conditions</a></li>
                 <li><a href="#" class="mr-4 text-sm font-normal text-gray-500 hover:underline md:mr-6 dark:text-gray-400">Privacy Policy</a></li>
