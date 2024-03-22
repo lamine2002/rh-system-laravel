@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('job_title');
             $table->decimal('salary', 8, 2);
             $table->foreignId('team_id')->nullable()->constrained('teams');
+            $table->string('status')->default('active');
             $table->timestamps();
         });
     }
