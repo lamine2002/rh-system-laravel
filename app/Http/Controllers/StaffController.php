@@ -37,25 +37,13 @@ class StaffController extends Controller
 
     public function create()
     {
-        // les talents de type 'Langues'
-        $idLangues = TalentType::all()->where('name', 'Langues')->first()->id;
-//        dd($idLangues);
-        $talentsLangues = Talent::where('talent_type_id', $idLangues)->get();
-        // les talents de type 'Compétences'
-        $idCompetences = TalentType::where('name', 'Compétences')->first()->id;
-        $talentsCompetences = Talent::where('talent_type_id', $idCompetences)->get();
-        // les talents de type 'Soft Skills'
-        $idSoftSkills = TalentType::where('name', 'Soft-skills')->first()->id;
-        $talentsSoftSkills = Talent::where('talent_type_id', $idSoftSkills)->get();
-        $chiefs = Staff::all();
         return view('rh.staff.form',
             [
                 'staff' => new Staff(),
                 'teams' => Team::all(),
-                'talentsLangues' => $talentsLangues,
-                'talentsCompetences' => $talentsCompetences,
-                'talentsSoftSkills' => $talentsSoftSkills,
-                'chiefs' => $chiefs
+                'talents' => Talent::all(),
+                'talentTypes' => TalentType::all(),
+                'chiefs' => Staff::all()
             ]
         );
     }
@@ -69,22 +57,14 @@ class StaffController extends Controller
 
     public function show(Staff $staff)
     {
-        // les talents de type 'Langues'
-        $idLangues = TalentType::where('name', 'Langues')->first()->id;
-        $talentsLangues = Talent::where('talent_type_id', $idLangues)->get();
-        // les talents de type 'Compétences'
-        $idCompetences = TalentType::where('name', 'Compétences')->first()->id;
-        $talentsCompetences = Talent::where('talent_type_id', $idCompetences)->get();
-        // les talents de type 'Soft Skills'
-        $idSoftSkills = TalentType::where('name', 'Soft-skills')->first()->id;
-        $talentsSoftSkills = Talent::where('talent_type_id', $idSoftSkills)->get();
+
         return view('rh.staff.show',
             [
                 'staff' => $staff,
                 'teams' => Team::all(),
-                'talentsLangues' => $talentsLangues,
-                'talentsCompetences' => $talentsCompetences,
-                'talentsSoftSkills' => $talentsSoftSkills
+                'talents' => Talent::all(),
+                'talentTypes' => TalentType::all(),
+                'chiefs' => Staff::all()
             ]
         );
     }
