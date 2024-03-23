@@ -5,7 +5,7 @@
 @section('contents')
     <div class="flex justify-between">
         <h1 class="text-3xl font-bold">Personnels</h1>
-        <a href="{{ route('rh.absences.create') }}" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Ajouter un Membre</a>
+        <a href="{{ route('rh.staff.create') }}" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Ajouter un Membre</a>
     </div>
 
     <div class="flex flex-col mt-8">

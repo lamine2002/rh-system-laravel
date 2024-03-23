@@ -38,7 +38,8 @@ class StaffController extends Controller
     public function create()
     {
         // les talents de type 'Langues'
-        $idLangues = TalentType::where('name', 'Langues')->first()->id;
+        $idLangues = TalentType::all()->where('name', 'Langues')->first()->id;
+//        dd($idLangues);
         $talentsLangues = Talent::where('talent_type_id', $idLangues)->get();
         // les talents de type 'Compétences'
         $idCompetences = TalentType::where('name', 'Compétences')->first()->id;
@@ -46,13 +47,15 @@ class StaffController extends Controller
         // les talents de type 'Soft Skills'
         $idSoftSkills = TalentType::where('name', 'Soft-skills')->first()->id;
         $talentsSoftSkills = Talent::where('talent_type_id', $idSoftSkills)->get();
+        $chiefs = Staff::all();
         return view('rh.staff.form',
             [
                 'staff' => new Staff(),
                 'teams' => Team::all(),
                 'talentsLangues' => $talentsLangues,
                 'talentsCompetences' => $talentsCompetences,
-                'talentsSoftSkills' => $talentsSoftSkills
+                'talentsSoftSkills' => $talentsSoftSkills,
+                'chiefs' => $chiefs
             ]
         );
     }
