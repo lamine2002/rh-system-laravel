@@ -16,7 +16,10 @@
 
 
 <script>
-    new TomSelect('select[multiple]', {plugins: {remove_button: {title: 'Supprimer'}}})
+    var selects = document.querySelectorAll('.tom-select');
+    for (var i = 0; i < selects.length; i++) {
+        new TomSelect(selects[i], {plugins: {remove_button: {title: 'Supprimer'}}});
+    }
 </script>
 </body>
 </html>

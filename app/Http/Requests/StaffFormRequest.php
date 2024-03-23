@@ -23,7 +23,7 @@ class StaffFormRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:staff,email',
+            'email' => 'required|email',
             'date_of_birth' => 'required|date',
             'phone' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -33,7 +33,7 @@ class StaffFormRequest extends FormRequest
             'chef_id' => 'nullable|exists:staff,id',
             'talents' => 'nullable|array',
             'status' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ];
     }
 }

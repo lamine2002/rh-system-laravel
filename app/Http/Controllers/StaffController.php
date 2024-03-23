@@ -21,6 +21,7 @@ class StaffController extends Controller
         $data = $request->validated();
         $image = $request->validated('image');
         if ($image === null || $image->getError()) {
+            $data['image'] = $staff->image;
             return $data;
         }
         if ($staff->image !== null) {
@@ -50,7 +51,21 @@ class StaffController extends Controller
 
     public function store(StaffFormRequest $request)
     {
-        $staff = Staff::create($this->extractData(new Staff(), $request));
+        $data = $this->extractData(new Staff(), $request);
+//        dd($data);
+        $staff = Staff::create([
+            'name'=> $data['name'],
+            'email'=> $data['email'],
+            'date_of_birth'=> $data['date_of_birth'],
+            'phone'=> $data['phone'],
+            'address'=> $data['address'],
+            'job_title'=> $data['job_title'],
+            'salary'=> $data['salary'],
+            'team_id'=> $data['team_id'],
+            'chef_id'=> $data['chef_id'],
+            'status'=> $data['status'],
+            'image'=> $data['image'],
+        ]);
         $staff->talents()->sync($request->validated('talents'));
         return redirect()->route('rh.staff.index')->with('success', 'Membre du personnel ajouté avec succès.');
     }
@@ -71,29 +86,40 @@ class StaffController extends Controller
 
     public function edit(Staff $staff)
     {
-        // les talents de type 'Langues'
-        $idLangues = TalentType::where('name', 'Langues')->first()->id;
-        $talentsLangues = Talent::where('talent_type_id', $idLangues)->get();
-        // les talents de type 'Compétences'
-        $idCompetences = TalentType::where('name', 'Compétences')->first()->id;
-        $talentsCompetences = Talent::where('talent_type_id', $idCompetences)->get();
-        // les talents de type 'Soft Skills'
-        $idSoftSkills = TalentType::where('name', 'Soft-skills')->first()->id;
-        $talentsSoftSkills = Talent::where('talent_type_id', $idSoftSkills)->get();
         return view('rh.staff.form',
             [
                 'staff' => $staff,
                 'teams' => Team::all(),
-                'talentsLangues' => $talentsLangues,
-                'talentsCompetences' => $talentsCompetences,
-                'talentsSoftSkills' => $talentsSoftSkills
+                'talents' => Talent::all(),
+                'talentTypes' => TalentType::all(),
+                'chiefs' => Staff::all()
             ]
         );
     }
 
     public function update(StaffFormRequest $request, Staff $staff)
     {
-        $staff->update($this->extractData($staff, $request));
+        $data = $this->extractData($staff, $request);
+//        dd($data);
+        $staff->update(
+            [
+                'name'=> $data['name'],
+                'email'=> $data['email'],
+                'date_of_birth'=> $data['date_of_birth'],
+                'phone'=> $data['phone'],
+                'address'=> $data['address'],
+                'job_title'=> $data['job_title'],
+                'salary'=> $data['salary'],
+                'team_id'=> $data['team_id'],
+                'chef_id'=> $data['chef_id'],
+                'status'=> $data['status'],
+                'image'=> $data['image'],
+            ]
+        );
+//        if ($data['image'] !== null) {
+//            $staff->update(['image' => $data['image']]);
+//        }
+
         $staff->talents()->sync($request->validated('talents'));
         return redirect()->route('rh.staff.index')->with('success', 'Membre du personnel modifié avec succès.');
     }
