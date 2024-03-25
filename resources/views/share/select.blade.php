@@ -5,16 +5,15 @@
     $label ??= ucfirst($name);
 @endphp
 
-<div class="form-group {{ $class }}">
-    <label for="{{ $name }}" class="block font-medium text-sm text-gray-700">{{ $label }}</label>
-    <select name="{{$name}}" id="{{$name}}" class="form-multiselect block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 @error($name) border-red-500 @enderror">
-        <option value="">Choisir {{ $label }}</option>
-        @foreach($categories as $k => $v)
-            <option value="{{ $k }}" {{ $k == $value ? 'selected' : '' }}>{{ $v }}</option>
+<div class="{{ $class ? 'form-group ' + $class : 'form-group' }}">
+    <label for="{{ $name }}" class="block text-gray-700 font-bold mb-2">{{ $label }}</label>
+    <select name="{{$name}}[]" id="{{$name}}" multiple class="tom-select block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" @error($name) class="border-red-500" @enderror>
+        @foreach($options as $option)
+            <option value="{{$option->id}}" @selected($value->contains($option->id))>{{$option->name}}</option>
         @endforeach
     </select>
     @error($name)
-    <div class="text-red-500 mt-1 text-sm">
+    <div class="text-red-500 text-xs italic mt-1">
         {{ $message }}
     </div>
     @enderror

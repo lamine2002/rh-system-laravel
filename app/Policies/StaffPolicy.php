@@ -21,7 +21,7 @@ class StaffPolicy
     /**
      * Determine whether the user can view the m.odel.
      */
-    public function view(User $user, Staff $staff): bool
+    public function view(User $user, Staff $staff): Response
     {
         return $user->role === 'admin' || $user->role === 'manager'
             ? Response::allow()

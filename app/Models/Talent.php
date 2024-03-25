@@ -13,7 +13,7 @@ class Talent extends Model
 
     public function staff()
     {
-        return $this->belongsToMany(Staff::class, 'staff_talent', 'talent_id', 'staff_id')->withPivot('level');
+        return $this->belongsToMany(Staff::class, 'staff_talent', 'talent_id', 'staff_id');
     }
 
     public function talentType()

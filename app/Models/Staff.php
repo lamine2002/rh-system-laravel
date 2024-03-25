@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Staff extends Model
 {
@@ -22,7 +23,7 @@ class Staff extends Model
 
     public function talents()
     {
-        return $this->belongsToMany(Talent::class, 'staff_talent')->withPivot('level');
+        return $this->belongsToMany(Talent::class, 'staff_talent');
     }
 
     public function documents()
@@ -63,5 +64,21 @@ class Staff extends Model
     public function subordinates()
     {
         return $this->hasMany(Staff::class, 'chef_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    public function imageUrl(): string
+    {
+        return Storage::disk('public')->url($this->image);
+    }
+
+    public function user()
+    {
+        // le role se trouve dans la table users qui a l'id de staff
+        return $this->belongsTo(User::class, 'staff_id');
     }
 }
