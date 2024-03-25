@@ -34,6 +34,7 @@ class StaffFormRequest extends FormRequest
             'talents' => 'nullable|array',
             'status' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'role' => 'required|string|max:255',
         ];
     }
 }

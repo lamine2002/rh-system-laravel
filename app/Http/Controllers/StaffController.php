@@ -44,7 +44,8 @@ class StaffController extends Controller
                 'teams' => Team::all(),
                 'talents' => Talent::all(),
                 'talentTypes' => TalentType::all(),
-                'chiefs' => Staff::all()
+                'chiefs' => Staff::all(),
+                'roles' => ['admin', 'staff', 'manager']
             ]
         );
     }
@@ -79,9 +80,9 @@ class StaffController extends Controller
                 'teams' => Team::all(),
                 'talents' => Talent::all(),
                 'talentTypes' => TalentType::all(),
-                'chiefs' => Staff::all()
-            ]
-        );
+                'chiefs' => Staff::all(),
+                'roles' => ['admin', 'staff', 'manager']
+        ]);
     }
 
     public function edit(Staff $staff)
@@ -92,7 +93,8 @@ class StaffController extends Controller
                 'teams' => Team::all(),
                 'talents' => Talent::all(),
                 'talentTypes' => TalentType::all(),
-                'chiefs' => Staff::all()
+                'chiefs' => Staff::all(),
+                'roles' => ['admin', 'staff', 'manager']
             ]
         );
     }

@@ -75,4 +75,10 @@ class Staff extends Model
     {
         return Storage::disk('public')->url($this->image);
     }
+
+    public function user()
+    {
+        // le role se trouve dans la table users qui a l'id de staff
+        return $this->belongsTo(User::class, 'staff_id');
+    }
 }

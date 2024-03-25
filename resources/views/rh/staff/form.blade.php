@@ -1,3 +1,13 @@
+@php
+    if ($staff->exists) {
+        $user = \App\Models\User::get()->where('staff_id', $staff->id)->first();
+        if ($user->role)
+            {
+                $staffRole = $user->role;
+            }
+//        dd($role);
+    }
+@endphp
 @extends('dashboard')
 
 @section('title', $staff->exists ? 'Modifier un membre' : 'Ajouter un membre')
@@ -156,6 +166,20 @@
                             <option value="inactive" {{ old('status', $staff->status) == 'inactive' ? 'selected' : '' }}>Inactif</option>
                         </select>
                         @error('status')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    {{-- Gerer les roles                    --}}
+
+                    <div>
+                        <label for="role" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Roles</label>
+                        <select name="role" id="role"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <option value="">Choisir le role</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role }}" {{($staff->exists && $staff->user() && $staffRole == $role) ? 'selected' : '' }}>{{ $role }}</option>                            @endforeach
+                        </select>
+                        @error('role')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
