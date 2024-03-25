@@ -1,12 +1,11 @@
 @php
     if ($staff->exists) {
-        $user = \App\Models\User::get()->where('staff_id', $staff->id)->first();
-        if ($user->role)
-            {
-                $staffRole = $user->role;
-            }
-//        dd($role);
+    $user = \App\Models\User::get()->where('staff_id', $staff->id)->first();
+    if ($user !== null && $user->role !== null)
+    {
+        $staffRole = $user->role;
     }
+}
 @endphp
 @extends('dashboard')
 
@@ -177,7 +176,7 @@
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                             <option value="">Choisir le role</option>
                             @foreach($roles as $role)
-                                <option value="{{ $role }}" {{($staff->exists && $staff->user() && $staffRole == $role) ? 'selected' : '' }}>{{ $role }}</option>                            @endforeach
+                                <option value="{{ $role }}" {{($staff->exists && $user && $staffRole == $role) ? 'selected' : '' }}>{{ $role }}</option>                            @endforeach
                         </select>
                         @error('role')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

@@ -7,7 +7,9 @@ use App\Models\Staff;
 use App\Models\Talent;
 use App\Models\TalentType;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class StaffController extends Controller
@@ -68,6 +70,16 @@ class StaffController extends Controller
             'image'=> $data['image'],
         ]);
         $staff->talents()->sync($request->validated('talents'));
+        if ($data['status'] == 'active') {
+            User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make('passer'), // default password (passer)
+                'role' => $data['role'],
+                'staff_id' => $staff->id
+
+            ]);
+        }
         return redirect()->route('rh.staff.index')->with('success', 'Membre du personnel ajouté avec succès.');
     }
 
@@ -118,6 +130,19 @@ class StaffController extends Controller
                 'image'=> $data['image'],
             ]
         );
+        if ($data['status'] === 'active' && $staff->user === null) {
+            User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make('passer'), // default password (passer)
+                'role' => $data['role'],
+                'staff_id' => $staff->id
+
+            ]);
+        }
+        if ($data['status'] === 'inactive' && $staff->user !== null) {
+            $staff->user->delete();
+        }
 //        if ($data['image'] !== null) {
 //            $staff->update(['image' => $data['image']]);
 //        }
