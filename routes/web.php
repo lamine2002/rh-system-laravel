@@ -64,3 +64,4 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
     Route::resource('talent-type', \App\Http\Controllers\TalentTypeController::class);
     Route::resource('team', \App\Http\Controllers\TeamController::class);
 });
+

@@ -15,20 +15,29 @@ class AbsenceController extends Controller
 
     public function index()
     {
-        $absences = Absence::all()->sortByDesc('created_at');
-        return view('rh.absences.index', compact('absences'));
+        $absences = Absence::orderBy('created_at', 'desc')->paginate(10);
+        return view('rh.absences.index',
+            [
+                'absences' => $absences
+            ]
+        );
     }
 
     public function create()
     {
         $staffs = \App\Models\Staff::all();
         return view('rh.absences.form',
-            compact('staffs')
+            [
+                'absence' => new Absence(),
+                'staffs' => $staffs,
+//                'statuses' => ['pending', 'approved', 'rejected']
+            ]
         );
     }
 
     public function store(AbsenceFormRequest $request)
     {
+//        dd($request->validated());
         Absence::create($request->validated());
         return redirect()->route('rh.absences.index')->with('success', 'Absence crée avec succès');
     }
@@ -41,7 +50,13 @@ class AbsenceController extends Controller
 
     public function edit(Absence $absence)
     {
-        return view('rh.absences.form', compact('absence'));
+        return view('rh.absences.form',
+            [
+                'absence' => $absence,
+                'staffs' => \App\Models\Staff::all(),
+            //                'statuses' => ['pending', 'approved', 'rejected']
+            ]
+        );
     }
 
     public function update(AbsenceFormRequest $request, Absence $absence)

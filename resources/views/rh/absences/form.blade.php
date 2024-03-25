@@ -3,48 +3,94 @@
 @section('title', 'Absences')
 
 @section('contents')
-{{-- Utilisation de tailwind css   --}}
-    <form action="{{ isset($absence) ? route('rh.absences.update', $absence) : route('rh.absences.store') }}" method="POST">
-        @csrf
-        @isset($absence)
-            @method('PUT')
-        @endisset
-        <div class="flex justify-between">
-            <h1 class="text-3xl font-bold">{{ isset($absence) ? 'Edit Absence' : 'Add Absence' }}</h1>
-            <a href="{{ route('rh.absences.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back</a>
-        </div>
-        <div class="mt-4">
-            <div class="mb-4">
-                <label for="staff_id" class="block text-gray-700 text-sm font-bold mb-2">Employee</label>
-                <select name="staff_id" id="staff_id" class="w-full border px-4 py-2 rounded">
-                    @foreach ($staffs as $staff)
-                        <option value="{{ $staff->id }}" {{ isset($absence) && $absence->staff_id == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
-                    @endforeach
-                </select>
+
+    <div class="flex justify-between">
+        <h1 class="text-3xl font-bold">{{ $absence->exists ? 'Modifier une absence' : 'Ajouter une absence' }}</h1>
+        <a href="{{ route('rh.absences.index') }}" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Retour</a>
+    </div>
+
+    <div class="mt-8">
+        <form method="post"  action="{{ $absence->exists ? route("rh.absences.update", $absence) : route("rh.absences.store") }}" >
+            @csrf
+            @if($absence->exists)
+                @method('patch')
+            @endif
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="staff_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Membre</label>
+                    <select name="staff_id" id="staff_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        <option value="">Choisir un membre</option>
+                        @foreach($staffs as $staff)
+                            <option value="{{ $staff->id }}" {{ old('staff_id', $absence->staff_id) == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('staff_id')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="reason" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Raison</label>
+                    <input type="text" name="reason" id="reason" value="{{ old('reason', $absence->reason) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    @error('reason')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
             </div>
-            <div class="mb-4">
-                <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date</label>
-                <input type="date" name="date" id="date" class="w-full border px-4 py-2 rounded" value="{{ isset($absence) ? $absence->date : '' }}">
+
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div>
+                    <label for="start_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date de Debut</label>
+                    <input type="date" name="start_date" id="start_date" value="{{ old('start_date', $absence->start_date) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    @error('start_date')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label for="end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Date de Fin</label>
+                    <input type="date" name="end_date" id="end_date" value="{{ old('end_date', $absence->end_date) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    @error('end_date')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
             </div>
-            <div class="mb-4">
-                <label for="type" class="block text-gray-700 text-sm font-bold mb-2">Type</label>
-                <select name="type" id="type" class="w-full border px-4 py-2 rounded">
-                    <option value="sick" {{ isset($absence) && $absence->type == 'sick' ? 'selected' : '' }}>Sick</option>
-                    <option value="vacation" {{ isset($absence) && $absence->type == 'vacation' ? 'selected' : '' }}>Vacation</option>
-                    <option value="personal" {{ isset($absence) && $absence->type == 'personal' ? 'selected' : '' }}>Personal</option>
-                </select>
+
+            {{-- Ajouter le status           --}}
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div>
+                    <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                    <select name="status" id="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        <option value="">Choisir un status</option>
+                        <option value="En attente" {{ old('status', $absence->status) == 'En attente' ? 'selected' : '' }}>En attente</option>
+                        <option value="Approuvée" {{ old('status', $absence->status) == 'Approuvée' ? 'selected' : '' }}>Approuvé</option>
+                        <option value="Rejetée" {{ old('status', $absence->status) == 'Rejetée' ? 'selected' : '' }}>Rejeté</option>
+                    </select>
+                    @error('status')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
-            <div class="mb-4">
-                <label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status</label>
-                <select name="status" id="status" class="w-full border px-4 py-2 rounded">
-                    <option value="pending" {{ isset($absence) && $absence->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                    <option value="approved" {{ isset($absence) && $absence->status == 'approved' ? 'selected' : '' }}>Approved</option>
-                    <option value="rejected" {{ isset($absence) && $absence->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
-                </select>
+
+            <div class="mt-8 flex justify-center">
+                <button type="submit" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">
+                    {{ $absence->exists ? 'Modifier' : 'Ajouter' }}
+                </button>
             </div>
-            <div class="mb-4">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{ isset($absence) ? 'Update' : 'Create' }}</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
+    <script>
+        {{-- verifier ce que envoie le formulaire        --}}
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = {};
+            for (const [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            console.log(data);
+        });
+    </script>
 @endsection
