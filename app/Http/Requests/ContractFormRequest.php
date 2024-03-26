@@ -24,7 +24,7 @@ class ContractFormRequest extends FormRequest
         return [
             'staff_id' => 'required|exists:staff,id',
             'contract_type' => 'required|string',
-            'start_date' => 'required|date|before_or_equal:end_date',
+            'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'object' => 'required|string',
             'status' => 'required|string',
