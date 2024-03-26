@@ -65,3 +65,10 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
     Route::resource('team', \App\Http\Controllers\TeamController::class);
 });
 
+Route::get('/rh/documents/{document}/download', [\App\Http\Controllers\DocumentController::class, 'download'])
+    ->name('rh.documents.download')
+    ->middleware('auth');
+
+Route::get('/rh/documents/{document}/preview', [\App\Http\Controllers\DocumentController::class, 'preview'])
+    ->name('rh.documents.preview')
+    ->middleware('auth');
