@@ -13,7 +13,7 @@ class MailAlertPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role('admin') || $user->role('manager');
+        return $user->role ==='admin' || $user->role === 'manager';
     }
 
     /**
@@ -21,7 +21,7 @@ class MailAlertPolicy
      */
     public function view(User $user, MailAlert $mailAlert): bool
     {
-        return $user->role('admin') || $user->role('manager') || $user->staff_id === $mailAlert->staff_id;
+        return $user->role ==='admin' || $user->role === 'manager' || $user->staff_id === $mailAlert->staff_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class MailAlertPolicy
      */
     public function restore(User $user, MailAlert $mailAlert): bool
     {
-        return $user->role('admin') || $user->role('manager');
+        return $user->role ==='admin' || $user->role === 'manager';
     }
 
     /**
