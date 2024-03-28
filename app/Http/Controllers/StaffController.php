@@ -130,7 +130,16 @@ class StaffController extends Controller
                 'image'=> $data['image'],
             ]
         );
-        if ($data['status'] === 'active' && $staff->user === null) {
+        $user = \App\Models\User::get()->where('staff_id', $staff->id)->first();
+//        dd($user);
+        if ($user !== null) {
+            $user->update([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'role' => $data['role'],
+            ]);
+        }
+        if ($user === null && $data['status'] === 'active') {
             User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
@@ -140,12 +149,9 @@ class StaffController extends Controller
 
             ]);
         }
-        if ($data['status'] === 'inactive' && $staff->user !== null) {
-            $staff->user->delete();
+        if ($user !== null && $data['status'] === 'inactive') {
+            $user->delete();
         }
-//        if ($data['image'] !== null) {
-//            $staff->update(['image' => $data['image']]);
-//        }
 
         $staff->talents()->sync($request->validated('talents'));
         return redirect()->route('rh.staff.index')->with('success', 'Membre du personnel modifié avec succès.');
