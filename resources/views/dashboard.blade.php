@@ -265,6 +265,9 @@
                     <li>
                         <a href="{{ route('rh.talent-type.index') }}" class="bg-white text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700  bg-gray-100 dark:bg-gray-700 ">Type de talents</a>
                     </li>
+                    <li>
+                        <a href="{{ route('rh.talent.index') }}" class="bg-white text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700  bg-gray-100 dark:bg-gray-700 ">Talents</a>
+                    </li>
 
                 </ul>
             </li>
