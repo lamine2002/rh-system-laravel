@@ -11,15 +11,8 @@ class Planning extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'staff_id',
-        'team_id',
-        'date',
-        'start_time',
-        'end_time',
-        'activity',
-        'status',
-    ];
+    protected $guarded = [];
+    protected $table = 'planning';
 
 //    public function team () {
 //        return Team::query()->where('leader_id', $this->staff_id)->orWhere('supervisor_id', $this->staff_id)->first();

@@ -24,9 +24,9 @@ class PlanningFormRequest extends FormRequest
         return [
             'staff_id' => 'required|integer',
             'team_id' => 'required|integer',
-            'date' => 'required|date',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i',
+            'date' => 'required|date|after_or_equal:today',
+            'start_time' => 'required|date_format:H:i|before:end_time',
+            'end_time' => 'required|date_format:H:i|after:start_time',
             'type' => 'required|string',
             'priority' => 'required|string|in:Normal,Urgent,Très urgent',
             'task' => 'required|string',
