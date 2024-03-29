@@ -36,13 +36,13 @@ class Team extends Model
         return $this->hasManyThrough(Leave::class, Staff::class);
     }
 
-    public function supervisors()
+    public function supervisor()
     {
-        return Staff::class->where('id', $this->supervisor_id);
+        return $this->belongsTo(Staff::class, 'supervisor_id');
     }
 
     public function leader()
     {
-        return Staff::class->where('id', $this->leader_id);
+        return $this->belongsTo(Staff::class, 'leader_id');
     }
 }
