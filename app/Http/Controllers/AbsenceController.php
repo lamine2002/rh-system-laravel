@@ -68,7 +68,8 @@ class AbsenceController extends Controller
     public function destroy(Absence $absence)
     {
         $absence->delete();
-        return redirect()->route('rh.absences.index')->with('success', 'Absence supprimé avec succès');
+        // retourner vers la page précédente
+        return redirect()->back()->with('success', 'Absence supprimé avec succès');
     }
 
 

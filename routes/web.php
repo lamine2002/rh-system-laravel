@@ -53,6 +53,9 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
         return view('rh.home');
     })->name('home');
 
+    Route::get('my-absences', [\App\Http\Controllers\PersonalController::class, 'absences'])
+        ->name('my-absences');
+
     Route::resource('absences', \App\Http\Controllers\AbsenceController::class);
     Route::resource('leave', \App\Http\Controllers\LeaveController::class);
     Route::resource('contracts', \App\Http\Controllers\ContractController::class);

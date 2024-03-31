@@ -6,7 +6,7 @@
 
     <div class="flex justify-between">
         <h1 class="text-3xl font-bold">{{ $absence->exists ? 'Modifier une absence' : 'Ajouter une absence' }}</h1>
-        <a href="{{ route('rh.absences.index') }}" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Retour</a>
+        <a href="{{ url()->previous() }}" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Retour</a>
     </div>
 
     <div class="mt-8">
