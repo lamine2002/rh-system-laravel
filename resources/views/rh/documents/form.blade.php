@@ -6,7 +6,7 @@
 
     <div class="flex justify-between">
         <h1 class="text-3xl font-bold">{{ $document->exists ? 'Modifier un document' : 'Ajouter un document' }}</h1>
-        <a href="{{ route('rh.documents.index') }}" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Retour</a>
+        <a href="{{ url()->previous() }}" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Retour</a>
     </div>
 
     <div class="mt-8">
@@ -40,18 +40,30 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-4">
-                <div>
-                    <label for="staff_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Staff</label>
-                    <select name="staff_id" id="staff_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <option value="">Choisir le staff</option>
-                        @foreach($staffs as $staff)
-                            <option value="{{ $staff->id }}" {{ old('staff_id', $document->staff_id) == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('staff_id')
+                @if(auth()->user()->role === 'staff')
+                    <input type="hidden" name="staff_id" value="{{ auth()->user()->staff_id }}">
+                    <div>
+                        <label for="UserName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Ajouté Par</label>
+                        <input type="text" name="UserName" id="UserName" value="{{ auth()->user()->name }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" readonly>
+                        @error('UserName')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                        @enderror
+                    </div>
+                @else
+                    <div>
+                        <label for="staff_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Staff</label>
+                        <select name="staff_id" id="staff_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <option value="">Choisir le staff</option>
+                            @foreach($staffs as $staff)
+                                <option value="{{ $staff->id }}" {{ old('staff_id', $document->staff_id) == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('staff_id')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
+
             </div>
 
             <div class="mt-8 flex justify-center">

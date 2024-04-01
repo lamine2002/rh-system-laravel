@@ -22,7 +22,7 @@ class DocumentFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|file|max:10240',
+            'file' => 'file|max:10240'.($this->route()->named('rh.documents.store') ? '|required' : ''),
             'type' => 'required|string|max:255',
             'staff_id' => 'required|exists:staff,id'
         ];

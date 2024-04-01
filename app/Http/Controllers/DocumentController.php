@@ -72,7 +72,7 @@ class DocumentController extends Controller
             'file' => $data['file'],
             'type' => $data['type']
         ]);
-        return redirect()->route('rh.documents.index');
+        return redirect()->back()->with('success', 'Document créé avec succès');
     }
 
     public function show(Document $document)
@@ -82,9 +82,28 @@ class DocumentController extends Controller
 
     public function edit(Document $document)
     {
+        $types = [
+            'Pièce d\'identité',
+            'Curriculum vitae',
+            'Diplôme',
+            'Contrat de travail',
+            'Facture',
+            'Bon de commande',
+            'Devis',
+            'Contrat commercial',
+            'Relevé bancaire',
+            'Rapport d\'activité',
+            'Compte-rendu de réunion',
+            'Procès-verbal d\'assemblée générale',
+            'Statuts de l\'entreprise',
+            'Document de présentation',
+            'Document technique',
+            'Correspondance'
+        ];
         return view('rh.documents.form',
             [
                 'document' => $document,
+                'types' => $types,
                 'staffs' => Staff::all(),
             ]
         );
@@ -98,14 +117,14 @@ class DocumentController extends Controller
             'file' => $data['file'],
             'type' => $data['type']
         ]);
-        return redirect()->route('rh.documents.index');
+        return redirect()->back()->with('success', 'Document mis à jour avec succès');
     }
 
     public function destroy(Document $document)
     {
         Storage::disk('public')->delete($document->file);
         $document->delete();
-        return redirect()->route('rh.documents.index');
+        return redirect()->back();
     }
 
     public function download(Document $document)
