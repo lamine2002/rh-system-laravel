@@ -55,6 +55,8 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
 
     Route::get('my-absences', [\App\Http\Controllers\PersonalController::class, 'absences'])
         ->name('my-absences');
+    Route::get('my-leave', [\App\Http\Controllers\PersonalController::class, 'leave'])
+        ->name('my-leave');
 
     Route::resource('absences', \App\Http\Controllers\AbsenceController::class);
     Route::resource('leave', \App\Http\Controllers\LeaveController::class);

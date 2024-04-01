@@ -20,11 +20,11 @@
                 {{ $absence->status === 'Rejetée' ? 'bg-red-300' : '' }}">
                 <div class="font-bold text-xl mb-2">{{ $absence->staff->name }}</div>
                 <p class="text-gray-700 text-base">
-                    Raison: {{ $absence->reason }}<br>
+                    <span class="text-4xs font-bold"> Raison</span> : {{ $absence->reason }}<br>
                     {{-- formater la date en format francaise                    --}}
-                    Date de Debut: {{ date('d/m/Y', strtotime($absence->start_date)) }}<br>
-                    Date de Fin: {{ date('d/m/Y', strtotime($absence->end_date)) }}<br>
-                    Status: {{ $absence->status }}
+                   <span class="text-4xs font-bold"> Date de Debut </span> : {{ date('d/m/Y', strtotime($absence->start_date)) }}<br>
+                    <span class="text-4xs font-bold">Date de Fin</span> : {{ date('d/m/Y', strtotime($absence->end_date)) }}<br>
+                    <span class="text-4xs font-bold">Status</span> : {{ $absence->status }}
                 </p>
                 @if($absence->status === 'En attente')
                     <div class="mt-4">

@@ -37,7 +37,7 @@ class LeaveController extends Controller
     {
         $data = $request->validated();
         $leave = Leave::create($data);
-        return redirect()->route('rh.leave.index')->with('success', 'Demande de congé créée avec succès');
+        return redirect()->back()->with('success', 'Demande de congé créée avec succès');
     }
 
     public function show(Leave $leave)
@@ -67,6 +67,6 @@ class LeaveController extends Controller
     public function destroy(Leave $leave)
     {
         $leave->delete();
-        return redirect()->route('rh.leave.index')->with('success', 'Demande de congé supprimée avec succès');
+        return redirect()->back()->with('success', 'Demande de congé supprimée avec succès');
     }
 }
