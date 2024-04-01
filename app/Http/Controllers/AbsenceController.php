@@ -39,7 +39,7 @@ class AbsenceController extends Controller
     {
 //        dd($request->validated());
         Absence::create($request->validated());
-        return redirect()->route('rh.absences.index')->with('success', 'Absence crée avec succès');
+        return redirect()->back()->with('success', 'Absence crée avec succès');
     }
 
 //    public function show(Absence $absence)

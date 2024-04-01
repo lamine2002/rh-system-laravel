@@ -18,16 +18,26 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label for="staff_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Membre</label>
-                    <select name="staff_id" id="staff_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <option value="">Choisir un membre</option>
-                        @foreach($staffs as $staff)
-                            <option value="{{ $staff->id }}" {{ old('staff_id', $absence->staff_id) == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('staff_id')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+
+                    @if(auth()->user()->role === 'staff')
+                        <input type="hidden" name="staff_id" value="{{ auth()->user()->staff_id }}">
+                            <label for="userName" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Faites Par</label>
+                            <input type="text" name="userName" id="userName" value="{{ auth()->user()->name }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" readonly>
+                            @error('staff_id')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                    @else
+                        <label for="staff_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Membre</label>
+                        <select name="staff_id" id="staff_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <option value="">Choisir un membre</option>
+                            @foreach($staffs as $staff)
+                                <option value="{{ $staff->id }}" {{ old('staff_id', $absence->staff_id) == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('staff_id')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    @endif
                 </div>
                 <div>
                     <label for="reason" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Raison</label>
@@ -59,18 +69,29 @@
 
             {{-- Ajouter le status           --}}
             <div class="grid grid-cols-2 gap-4 mt-4">
-                <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
-                    <select name="status" id="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                        <option value="">Choisir un status</option>
-                        <option value="En attente" {{ old('status', $absence->status) == 'En attente' ? 'selected' : '' }}>En attente</option>
-                        <option value="Approuvée" {{ old('status', $absence->status) == 'Approuvée' ? 'selected' : '' }}>Approuvé</option>
-                        <option value="Rejetée" {{ old('status', $absence->status) == 'Rejetée' ? 'selected' : '' }}>Rejeté</option>
-                    </select>
-                    @error('status')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
+                @if(auth()->user()->role === 'staff')
+                    <input type="hidden" name="status" value="En attente">
+                    <div>
+                        <label for="defaultStatus" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Statut Par Defaut</label>
+                        <input type="text" name="defaultStatus" id="defaultStatus" value="En attente" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" readonly>
+                        @error('status')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    @else
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
+                        <select name="status" id="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <option value="">Choisir un status</option>
+                            <option value="En attente" {{ old('status', $absence->status) == 'En attente' ? 'selected' : '' }}>En attente</option>
+                            <option value="Approuvée" {{ old('status', $absence->status) == 'Approuvée' ? 'selected' : '' }}>Approuvé</option>
+                            <option value="Rejetée" {{ old('status', $absence->status) == 'Rejetée' ? 'selected' : '' }}>Rejeté</option>
+                        </select>
+                        @error('status')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
             </div>
 
             <div class="mt-8 flex justify-center">
@@ -81,8 +102,8 @@
         </form>
     </div>
 
-    <script>
-        {{-- verifier ce que envoie le formulaire        --}}
+   {{-- <script>
+        --}}{{-- verifier ce que envoie le formulaire        --}}{{--
         document.querySelector('form').addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(e.target);
@@ -92,5 +113,5 @@
             }
             console.log(data);
         });
-    </script>
+    </script>--}}
 @endsection
