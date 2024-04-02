@@ -86,9 +86,9 @@
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $member->status === 'active' ? 'bg-green-100' : 'bg-red-300' }} text-green-800 dark:bg-green-800 dark:text-green-100">
-                    {{ $member->status }}
-                </span>
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $member->status === 'active' ? 'bg-green-100' : 'bg-red-300' }} text-green-800 dark:bg-green-800 dark:text-green-100">
+                                    {{ $member->status }}
+                                </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <a href="{{ route('rh.staff.edit', $member) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600">Editer</a>

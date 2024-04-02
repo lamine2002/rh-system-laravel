@@ -3,7 +3,7 @@
 @section('title', 'Planning')
 
 @section('contents')
-    <div class="flex justify-between">
+    <div class="flex justify-between" xmlns="http://www.w3.org/1999/html">
         <h1 class="text-3xl font-bold">Planning</h1>
         <a href="{{ route('rh.planning.create') }}" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Ajouter un Planning</a>
     </div>
@@ -16,31 +16,31 @@
                         <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Staff ID
+                                Membre
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Team ID
+                                Equipe
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Date
+                                Date de début
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Start Time
+                                Date de fin
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                End Time
+                                Heure de début
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Type
+                                Heure de fin
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Priority
+                                Priorité
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Task
+                                Tache
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
-                                Status
+                                Statuts
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400">
                                 Actions
@@ -83,7 +83,13 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900 dark:text-white">
-                                    {{ $planning->priority }}
+                                    @if( $planning->priority === 'Normal' )
+                                        <span class="bg-blue-200 text-blue-800 px-2 py-1 rounded-full">{{ $planning->priority }}</span>
+                                    @elseif( $planning->priority === 'Urgent' )
+                                        <span class="bg-red-200 text-red-800 px-2 py-1 rounded-full">{{ $planning->priority }}</span>
+                                    @else
+                                        <span class="bg-green-200 text-green-800 px-2 py-1 rounded-full">{{ $planning->priority }}</span>
+                                    @endif
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -93,7 +99,13 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900 dark:text-white">
-                                    {{ $planning->status }}
+                                    @if($planning->status === 'En attente' )
+                                        <span class="bg-orange-200 text-orange-800 px-2 py-1 rounded-full"> {{ $planning->status }} </span>
+                                    @elseif($planning->status === 'En cours')
+                                        <span class="bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full"> {{ $planning->status }} </span>
+                                    @else
+                                        <span class="bg-green-200 text-green-800 px-2 py-1 rounded-full"> {{ $planning->status }} </span>
+                                    @endif
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

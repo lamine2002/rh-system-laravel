@@ -22,8 +22,8 @@ class PlanningFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'staff_id' => 'integer',
-            'team_id' => 'integer',
+            'staff_id' => 'integer|nullable',
+            'team_id' => 'integer|nullable',
             'date' => 'required|date|after_or_equal:today',
             'start_time' => 'required|date_format:H:i|before:end_time',
             'end_time' => 'required|date_format:H:i|after:start_time',
@@ -31,6 +31,7 @@ class PlanningFormRequest extends FormRequest
             'priority' => 'required|string|in:Normal,Urgent,Très urgent',
             'task' => 'required|string',
             'status' => 'required|string|in:En attente,En cours,Clôturée',
+            'end_date' => 'nullable|date|after_or_equal:date',
         ];
     }
 }
