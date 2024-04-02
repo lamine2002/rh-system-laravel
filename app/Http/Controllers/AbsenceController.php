@@ -39,7 +39,10 @@ class AbsenceController extends Controller
     {
 //        dd($request->validated());
         Absence::create($request->validated());
-        return redirect()->back()->with('success', 'Absence crée avec succès');
+        if (auth()->user()->role === 'admin'|| auth()->user()->role === 'manager'){
+            return redirect()->route('rh.absences.index')->with('success', 'Absence crée avec succès');
+        }
+        return redirect()->route('rh.my-absences')->with('success', 'Absence crée avec succès');
     }
 
 //    public function show(Absence $absence)
@@ -69,8 +72,19 @@ class AbsenceController extends Controller
     {
         $absence->delete();
         // retourner vers la page précédente
-        return redirect()->back()->with('success', 'Absence supprimé avec succès');
+        return redirect()->route('rh.absences.index')->with('success', 'Absence supprimé avec succès');
     }
 
+    public function approve(Absence $absence)
+    {
+        $absence->update(['status' => 'Approuvée']);
+        return redirect()->route('rh.absences.index')->with('success', 'Absence approuvé avec succès');
+    }
+
+    public function reject(Absence $absence)
+    {
+        $absence->update(['status' => 'Rejetée']);
+        return redirect()->route('rh.absences.index')->with('success', 'Absence rejetée avec succès');
+    }
 
 }

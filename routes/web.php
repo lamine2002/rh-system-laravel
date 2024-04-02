@@ -71,6 +71,11 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
     Route::resource('talent', \App\Http\Controllers\TalentController::class);
     Route::resource('talent-type', \App\Http\Controllers\TalentTypeController::class);
     Route::resource('team', \App\Http\Controllers\TeamController::class);
+
+    Route::put('/absences/{absence}/approve', [\App\Http\Controllers\AbsenceController::class, 'approve'])
+        ->name('absences.approve');
+    Route::put('/absences/{absence}/reject', [\App\Http\Controllers\AbsenceController::class, 'reject'])
+        ->name('absences.reject');
 });
 
 Route::get('/rh/documents/{document}/download', [\App\Http\Controllers\DocumentController::class, 'download'])
