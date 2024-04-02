@@ -17,18 +17,29 @@
             @endif
 
             <div class="mt-4">
-                <label for="staff_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Staff ID</label>
-                <input type="text" name="staff_id" id="staff_id" value="{{ old('staff_id', $planning->staff_id) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                <label for="staff_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Membre</label>
+                <select name="staff_id" id="staff_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <option value="">Sélectionner un membre</option>
+                    @foreach($staffs as $staff)
+                        <option value="{{ $staff->id }}" {{ old('staff_id', $planning->staff_id) == $staff->id ? 'selected' : '' }}>{{ $staff->name }}</option>
+                    @endforeach
+                </select>
                 @error('staff_id')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
+
             </div>
 
             <!-- Add other fields here in a similar fashion -->
             <div class="grid grid-cols-2 gap-4 mt-4">
                 <div>
-                    <label for="team_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Team ID</label>
-                    <input type="text" name="team_id" id="team_id" value="{{ old('team_id', $planning->team_id) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <label for="team_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Chosir une équipe</label>
+                    <select name="team_id" id="team_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        <option value="">Sélectionner une équipe</option>
+                        @foreach($teams as $team)
+                            <option value="{{ $team->id }}" {{ old('team_id', $planning->team_id) == $team->id ? 'selected' : '' }}>{{ $team->name }}</option>
+                        @endforeach
+                    </select>
                     @error('team_id')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -45,7 +56,7 @@
 
             <div class="grid grid-cols-2 gap-4 mt-4">
                 <div>
-                    <label for="start_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Time</label>
+                    <label for="start_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Heure de Début</label>
                     <input type="time" name="start_time" id="start_time" value="{{ old('start_time', $planning->start_time) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                     @error('start_time')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -53,28 +64,12 @@
                 </div>
 
                 <div>
-                    <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Time</label>
+                    <label for="end_time" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Heure de Fin</label>
                     <input type="time" name="end_time" id="end_time" value="{{ old('end_time', $planning->end_time) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                     @error('end_time')
                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
                 </div>
-            </div>
-
-            <div class="mt-4">
-                <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
-                <input type="text" name="type" id="type" value="{{ old('type', $planning->type) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                @error('type')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="mt-4">
-                <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Priority</label>
-                <input type="text" name="priority" id="priority" value="{{ old('priority', $planning->priority) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                @error('priority')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <div class="mt-4">
@@ -86,8 +81,41 @@
             </div>
 
             <div class="mt-4">
-                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
-                <input type="text" name="status" id="status" value="{{ old('status', $planning->status) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
+                <select name="type" id="type" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <option value="">Sélectionner un type</option>
+                    @foreach($types as $type)
+                        <option value="{{ $type }}" {{ old('type', $planning->type) == $type ? 'selected' : '' }}>{{ $type }}</option>
+                    @endforeach
+                </select>
+                @error('type')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mt-4">
+                <label for="priority" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Priorité</label>
+                <select name="priority" id="priority" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <option value="">Sélectionner une priorité</option>
+                    @foreach($priorities as $priority)
+                        <option value="{{ $priority }}" {{ old('priority', $planning->priority) == $priority ? 'selected' : '' }}>{{ $priority }}</option>
+                    @endforeach
+                </select>
+                @error('priority')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+
+
+            <div class="mt-4">
+                <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Statuts</label>
+                <select name="status" id="status" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                    <option value="">Sélectionner un statut</option>
+                    @foreach($statuses as $status)
+                        <option value="{{ $status }}" {{ old('status', $planning->status) == $status ? 'selected' : '' }}>{{ $status }}</option>
+                    @endforeach
+                </select>
                 @error('status')
                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror

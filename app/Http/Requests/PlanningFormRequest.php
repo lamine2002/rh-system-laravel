@@ -22,8 +22,8 @@ class PlanningFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'staff_id' => 'required|integer',
-            'team_id' => 'required|integer',
+            'staff_id' => 'integer',
+            'team_id' => 'integer',
             'date' => 'required|date|after_or_equal:today',
             'start_time' => 'required|date_format:H:i|before:end_time',
             'end_time' => 'required|date_format:H:i|after:start_time',
