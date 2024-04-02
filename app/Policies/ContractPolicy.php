@@ -43,7 +43,7 @@ class ContractPolicy
      */
     public function update(User $user, Contract $contract): bool
     {
-        return $user->role === 'admin' || $user->role === 'manager';
+        return ($user->role === 'admin' || $user->role === 'manager') && $contract->status === 'En cours';
     }
 
     /**

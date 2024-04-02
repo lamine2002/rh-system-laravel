@@ -49,7 +49,7 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team): bool
     {
-        return $user->role === 'admin' || $user->role === 'manager';
+        return ($user->role === 'admin' || $user->role === 'manager') && $team->staff()->count() === 0;
     }
 
     /**

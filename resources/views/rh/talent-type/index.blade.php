@@ -34,11 +34,13 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <a href="{{ route('rh.talent-type.edit', $talentType) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
+                            @can('delete', $talentType)
                             <form method="post" action="{{ route('rh.talent-type.destroy', $talentType) }}" class="inline ml-2">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach

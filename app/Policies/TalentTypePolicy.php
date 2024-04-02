@@ -53,7 +53,7 @@ class TalentTypePolicy
      */
     public function delete(User $user, TalentType $talentType): Response
     {
-        return $user->role === 'admin' || $user->role === 'manager'
+        return ($user->role === 'admin' || $user->role === 'manager') && $talentType->talents->count() === 0
             ? Response::allow()
             : Response::deny('You are not authorized to delete this talent type.');
     }

@@ -46,12 +46,6 @@
                             <a href="{{ route('rh.documents.download', $document) }}" class="text-green-600 hover:text-green-900 ml-2">Telecharger</a>
                             {{-- preview                            --}}
                             <a href="{{ route('rh.documents.preview', $document) }}" class="text-green-600 hover:text-green-900 ml-2">Preview</a>
-                            {{-- Supprimer --}}
-                            <form method="post" action="{{ route('rh.documents.destroy', $document) }}" class="inline ml-2">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
-                            </form>
                         </td>
                     </tr>
                     @endforeach

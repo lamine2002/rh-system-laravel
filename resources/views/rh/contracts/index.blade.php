@@ -73,13 +73,16 @@
                             @endif
 
                         </td>
+
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            @can('update', $contract)
                             <a href="{{ route('rh.contracts.edit', $contract) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
-                            <form method="post" action="{{ route('rh.contracts.destroy', $contract) }}" class="inline">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
-                            </form>
+                            @endcan
+                            @cannot('update', $contract)
+                                <p class=" whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    Aucune action disponible
+                                </p>
+                            @endcannot
                         </td>
                     </tr>
                     @endforeach
