@@ -76,7 +76,14 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
         ->name('absences.approve');
     Route::put('/absences/{absence}/reject', [\App\Http\Controllers\AbsenceController::class, 'reject'])
         ->name('absences.reject');
+
+    Route::put('/leave/{leave}/approve', [\App\Http\Controllers\LeaveController::class, 'approve'])
+        ->name('leave.approve');
+    Route::put('/leave/{leave}/reject', [\App\Http\Controllers\LeaveController::class, 'reject'])
+        ->name('leave.reject');
 });
+
+
 
 Route::get('/rh/documents/{document}/download', [\App\Http\Controllers\DocumentController::class, 'download'])
     ->name('rh.documents.download')

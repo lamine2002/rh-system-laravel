@@ -69,4 +69,16 @@ class LeaveController extends Controller
         $leave->delete();
         return redirect()->back()->with('success', 'Demande de congé supprimée avec succès');
     }
+
+    public function approve(Leave $leave)
+    {
+        $leave->update(['status' => 'Accepté']);
+        return redirect()->back()->with('success', 'Demande de congé approuvée avec succès');
+    }
+
+    public function reject(Leave $leave)
+    {
+        $leave->update(['status' => 'Refusé']);
+        return redirect()->back()->with('success', 'Demande de congé refusée avec succès');
+    }
 }

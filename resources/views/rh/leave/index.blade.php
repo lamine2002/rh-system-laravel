@@ -71,12 +71,38 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="{{ route('rh.leave.edit', $leave) }}" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
-                            <form method="post" action="{{ route('rh.leave.destroy', $leave) }}" class="inline ml-2">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
-                            </form>
+                            @if($leave->status === 'En attente')
+                                <form method="post" action="{{ route('rh.leave.approve', $leave) }}" class="inline">
+                                    @csrf
+                                    @method('put')
+
+                                    <button type="submit" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                                            <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
+                                        </svg>
+                                        <span class="sr-only">Icon description</span>
+                                    </button>
+                                </form>
+
+                                <form method="post" action="{{ route('rh.leave.reject', $leave) }}" class="inline">
+                                    @csrf
+                                    @method('put')
+                                    <button type="submit" class="ml-2 text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500">
+                                        <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             viewBox="0 0 32 32" xml:space="preserve">
+                                    <g>
+                                        <path d="M5.7,8.5C5.2,8,4.4,8.1,4.1,8.7C2.7,10.8,2,13.4,2,16c0,3.7,1.5,7.3,4.1,9.9S12.3,30,16,30c2.6,0,5.2-0.7,7.3-2.1
+                                            c0.5-0.3,0.6-1.1,0.2-1.6L5.7,8.5z"/>
+                                        <path d="M26.3,23.5c0.5,0.5,1.2,0.4,1.6-0.2c1.4-2.2,2.1-4.7,2.1-7.3c0-3.7-1.5-7.3-4.1-9.9S19.7,2,16,2c-2.6,0-5.2,0.7-7.3,2.1
+                                            C8.1,4.4,8,5.2,8.5,5.7L26.3,23.5z"/>
+                                    </g>
+                                </svg>
+                                        <span class="sr-only">Icon description</span>
+                                    </button>
+                                </form>
+                            @else
+                                <span class="text-gray-500 dark:text-gray-400">Aucune action</span>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
