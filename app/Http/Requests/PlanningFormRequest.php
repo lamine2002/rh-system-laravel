@@ -30,7 +30,7 @@ class PlanningFormRequest extends FormRequest
             'type' => 'required|string',
             'priority' => 'required|string|in:Normal,Urgent,Très urgent',
             'task' => 'required|string',
-            'status' => 'required|string|in:En attente,En cours,Clôturée',
+            'status' => 'required|string|in:En attente,Incompletée,Complétée',
             'end_date' => 'nullable|date|after_or_equal:date',
         ];
     }

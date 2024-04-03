@@ -30,7 +30,7 @@ class PlanningController extends Controller
                 'teams' => Team::all(),
                 'types' => ['Réunion', 'Tâche', 'Formation'],
                 'priorities' => ['Normal', 'Urgent', 'Très urgent'],
-                'statuses' => ['En attente', 'En cours', 'Clôturée']
+                'statuses' => ['En attente', 'Incompletée', 'Complétée']
             ]
         );
     }
@@ -51,9 +51,14 @@ class PlanningController extends Controller
                 'teams' => Team::all(),
                 'types' => ['Réunion', 'Tâche', 'Formation'],
                 'priorities' => ['Normal', 'Urgent', 'Très urgent'],
-                'statuses' => ['En attente', 'En cours', 'Clôturée']
+                'statuses' => ['En attente', 'Incompletée', 'Complétée']
             ]
         );
+    }
+
+    public function show(Planning $planning)
+    {
+        return view('rh.planning.show', compact('planning'));
     }
 
     public function update(PlanningFormRequest $request, Planning $planning)

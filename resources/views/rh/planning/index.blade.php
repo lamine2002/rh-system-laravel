@@ -101,16 +101,24 @@
                                 <div class="text-sm text-gray-900 dark:text-white">
                                     @if($planning->status === 'En attente' )
                                         <span class="bg-orange-200 text-orange-800 px-2 py-1 rounded-full"> {{ $planning->status }} </span>
-                                    @elseif($planning->status === 'En cours')
-                                        <span class="bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full"> {{ $planning->status }} </span>
+                                    @elseif($planning->status === 'Incompletée')
+                                        <span class="bg-red-200 text-red-800 px-2 py-1 rounded-full"> {{ $planning->status }} </span>
                                     @else
                                         <span class="bg-green-200 text-green-800 px-2 py-1 rounded-full"> {{ $planning->status }} </span>
                                     @endif
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                @can('delete', $planning)
                                 <a href="{{ route('rh.planning.edit', $planning) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600">Editer</a>
                                 <a href="{{ route('rh.planning.show', $planning) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 ml-4">Voir</a>
+
+                                <form action="{{ route('rh.planning.destroy', $planning) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600 ml-4">Supprimer</button>
+                                </form>
+                                @endcan
                             </td>
                         </tr>
                         <!-- End of data row -->
