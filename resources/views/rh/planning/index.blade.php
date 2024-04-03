@@ -111,7 +111,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 @can('delete', $planning)
                                 <a href="{{ route('rh.planning.edit', $planning) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600">Editer</a>
-                                <a href="{{ route('rh.planning.show', $planning) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 ml-4">Voir</a>
+{{--                                <a href="{{ route('rh.planning.show', $planning) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-600 ml-4">Voir</a>--}}
 
                                 <form action="{{ route('rh.planning.destroy', $planning) }}" method="POST" class="inline-block">
                                     @csrf
@@ -119,6 +119,9 @@
                                     <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-600 ml-4">Supprimer</button>
                                 </form>
                                 @endcan
+                                @cannot('delete', $planning)
+                                    <p class="text-gray-500  dark:text-indigo-400 dark:hover:text-indigo-600">Pas d'action possible</p>
+                                @endcannot
                             </td>
                         </tr>
                         <!-- End of data row -->
