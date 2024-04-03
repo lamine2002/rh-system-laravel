@@ -45,4 +45,9 @@ class Team extends Model
     {
         return $this->belongsTo(Staff::class, 'leader_id');
     }
+
+    public function planning()
+    {
+        return $this->hasMany(Planning::class, 'team_id', 'id');
+    }
 }

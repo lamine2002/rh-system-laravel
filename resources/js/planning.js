@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', function() {
+
 const member = document.getElementById('planning_staff_id');
 const team = document.getElementById('planning_team_id');
 
@@ -19,4 +21,6 @@ team.addEventListener('change', function() {
         // Enable the member select
         member.removeAttribute('disabled');
     }
+});
+
 });

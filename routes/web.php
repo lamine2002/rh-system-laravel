@@ -61,6 +61,9 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
     Route::get('my-documents', [\App\Http\Controllers\PersonalController::class, 'documents'])
         ->name('my-documents');
 
+    Route::get('team-planning', [\App\Http\Controllers\PersonalController::class, 'teamPlanning'])
+        ->name('team-planning');
+
     Route::resource('absences', \App\Http\Controllers\AbsenceController::class);
     Route::resource('leave', \App\Http\Controllers\LeaveController::class);
     Route::resource('contracts', \App\Http\Controllers\ContractController::class);

@@ -49,4 +49,16 @@ class PersonalController extends Controller
             ]
         );
     }
+
+    public function teamPlanning()
+    {
+        $team = auth()->user()->team();
+        // verifier si l'utilisateur a une equipe
+        if (!$team) {
+            return view('rh.personal.team-planning');
+        }else{
+            $plannings = $team->planning()->orderBy('date', 'desc')->paginate(10);
+        }
+        return view('rh.personal.team-planning', compact('plannings'));
+    }
 }
