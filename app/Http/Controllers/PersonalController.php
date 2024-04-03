@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Absence;
 use App\Models\Document;
 use App\Models\Leave;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class PersonalController extends Controller
@@ -52,13 +53,39 @@ class PersonalController extends Controller
 
     public function teamPlanning()
     {
-        $team = auth()->user()->team();
+        $team = auth()->user()->staff()->first()->team()->first();
+//        dd($team);
         // verifier si l'utilisateur a une equipe
         if (!$team) {
             return view('rh.personal.team-planning');
-        }else{
-            $plannings = $team->planning()->orderBy('date', 'desc')->paginate(10);
         }
+        $plannings = $team->planning()->orderBy('date', 'desc')->paginate(10);
+//        dd($plannings);
+/*        je veux recuperer les plannings de l'equipe de l'utilisateur connecté
+        sous cette forme:
+        [
+        {
+            title: 'All Day Event',
+                    start: '2023-01-01'
+                },
+        {
+            title: 'Long Event',
+                    start: '2023-01-07',
+                    end: '2023-01-10'
+                },
+        ]*/
+        $plannings = $plannings->map(function ($planning) {
+            return [
+                'title' => $planning->task,
+                'start' => $planning->date.'T'.$planning->start_time,
+                'end' => $planning->end_date.'T'.$planning->end_time,
+            ];
+        });
+//        dd($plannings);
+
+
+
+
         return view('rh.personal.team-planning', compact('plannings'));
     }
 }
