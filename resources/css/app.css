@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.fc-toolbar-title {
+    white-space: nowrap; /* Empêcher le texte de passer à la ligne */
+    text-overflow: ellipsis; /* Ajouter des points de suspension si le texte est trop long */
+    overflow: hidden; /* Masquer le texte qui dépasse du conteneur */
+}
+
+
 /*@import '@fullcalendar/core/main.css';
 @import '@fullcalendar/daygrid/main.css';
 @import '@fullcalendar/timegrid/main.css';

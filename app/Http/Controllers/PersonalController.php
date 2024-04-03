@@ -76,9 +76,16 @@ class PersonalController extends Controller
         ]*/
         $plannings = $plannings->map(function ($planning) {
             return [
-                'title' => $planning->task,
-                'start' => $planning->date.'T'.$planning->start_time,
-                'end' => $planning->end_date.'T'.$planning->end_time,
+                'title' => $planning->task.' - '.$planning->type.' - '.$planning->status,
+                'start' => $planning->date/*.'T'.$planning->start_time*/,
+                'end' => $planning->end_date/*.'T'.$planning->end_time*/,
+                // priorité de la tache
+                'backgroundColor' => match ($planning->priority) {
+                    'Normal' => '#007bff',
+                    'Urgent' => '#ffc107',
+                    'Très urgent' => '#dc3545',
+                    default => '#28a745',
+                },
             ];
         });
 //        dd($plannings);
