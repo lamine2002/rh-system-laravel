@@ -144,6 +144,9 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
         );
     })->name('home');
 
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+        ->name('dashboard');
+
     Route::get('my-absences', [\App\Http\Controllers\PersonalController::class, 'absences'])
         ->name('my-absences');
     Route::get('my-leave', [\App\Http\Controllers\PersonalController::class, 'leave'])
