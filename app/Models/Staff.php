@@ -13,7 +13,7 @@ class Staff extends Model
 
     public function planning()
     {
-        return $this->hasMany(Planning::class);
+        return $this->hasMany(Planning::class, 'staff_id', 'id');
     }
 
     public function contracts()

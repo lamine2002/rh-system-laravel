@@ -51,15 +51,31 @@ Route::delete('/logout', [\App\Http\Controllers\AuthController::class, 'logout']
 
 Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
     Route::get('/home', function () {
-        // nombre de tache d'equipe completee
-        $completedTeamPlannings = auth()->user()->staff()->first()->team()->first()->planning()->where('status', 'Complétée')->count();
-        // nombre d'absences Approuvées
-        $approvedAbsences = auth()->user()->staff()->first()->absences()->where('status', 'Approuvée')->count();
-        // nombre de tache personnelles completees
-        $completedPersonalPlannings = auth()->user()->staff()->first()->planning()->where('status', 'Complétée')->count();
-        // nombre de tache personnelles incompletees
-        $incompletedPersonalPlannings = auth()->user()->staff()->first()->planning()->where('status', 'Incomplétée')->count();
+        // Get the Staff record for the authenticated user
+        $staff = auth()->user()->staff;
 
+        // Check if the Staff record exists
+        if (!$staff) {
+            // Handle the case where the Staff record doesn't exist
+            // For example, you could return an error message
+            return redirect()->back()->with('error', 'No staff record found for the authenticated user.');
+        }
+
+        // Get the Team record for the Staff
+        $team = $staff->team()->first();
+
+        // Check if the Team record exists
+        if (!$team) {
+            // Handle the case where the Team record doesn't exist
+            // For example, you could return an error message
+            return redirect()->route('rh.my-absences')->with('error', 'No team record found for the staff.');
+        }
+
+        // Now you can safely call the planning() method
+        $completedTeamPlannings = $team->planning()->where('status', 'Complétée')->count();
+        $approvedAbsences = $staff->absences()->where('status', 'Approuvée')->count();
+        $completedPersonalPlannings = $staff->planning()->where('status', 'Complétée')->count();
+        $incompletedPersonalPlannings = $staff->planning()->where('status', 'Incomplétée')->count();
         /*
          * Liste des taches personnelles completees de chaque jour de chaque semaine pour mon graphique
          * sous cette forme: [2, 0, 2, 4, 1, 7, 3],

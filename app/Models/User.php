@@ -46,7 +46,8 @@ class User extends Authenticatable
     ];
 
 
-    public function staff () {
-        return Staff::query()->where('id', $this->staff_id)->first();
+    public function staff(): HasOne
+    {
+        return $this->hasOne(Staff::class, 'id', 'staff_id');
     }
 }
