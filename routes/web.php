@@ -50,7 +50,22 @@ Route::delete('/logout', [\App\Http\Controllers\AuthController::class, 'logout']
 
 Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
     Route::get('/home', function () {
-        return view('rh.home');
+        // nombre de tache d'equipe completee
+        $completedTeamPlannings = auth()->user()->staff()->first()->team()->first()->planning()->where('status', 'Complétée')->count();
+        // nombre d'absences Approuvées
+        $approvedAbsences = auth()->user()->staff()->first()->absences()->where('status', 'Approuvée')->count();
+        // nombre de tache personnelles completees
+        $completedPersonalPlannings = auth()->user()->staff()->first()->planning()->where('status', 'Complétée')->count();
+        // nombre de tache personnelles incompletees
+        $incompletedPersonalPlannings = auth()->user()->staff()->first()->planning()->where('status', 'Incomplétée')->count();
+        return view('rh.home',
+            [
+                'completedTeamPlannings' => $completedTeamPlannings,
+                'approvedAbsences' => $approvedAbsences,
+                'completedPersonalPlannings' => $completedPersonalPlannings,
+                'incompletedPersonalPlannings' => $incompletedPersonalPlannings
+            ]
+        );
     })->name('home');
 
     Route::get('my-absences', [\App\Http\Controllers\PersonalController::class, 'absences'])

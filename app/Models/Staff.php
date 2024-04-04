@@ -11,7 +11,7 @@ class Staff extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function plannings()
+    public function planning()
     {
         return $this->hasMany(Planning::class);
     }
