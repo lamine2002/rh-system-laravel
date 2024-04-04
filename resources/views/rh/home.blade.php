@@ -97,7 +97,7 @@
         <div class="flex justify-between mb-5">
             <div class="grid gap-4 grid-cols-2">
                 <div>
-                    <h5 class="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2">Clicks
+                    <h5 class="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2">Complétée
                         <svg data-popover-target="clicks-info" data-popover-placement="bottom" class="w-3 h-3 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
@@ -114,10 +114,10 @@
                             <div data-popper-arrow></div>
                         </div>
                     </h5>
-                    <p class="text-gray-900 dark:text-white text-2xl leading-none font-bold">42,3k</p>
+                    <p class="text-gray-900 dark:text-white text-2xl leading-none font-bold">{{ $completedPersonalPlannings }}</p>
                 </div>
                 <div>
-                    <h5 class="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2">CPC
+                    <h5 class="inline-flex items-center text-gray-500 dark:text-gray-400 leading-none font-normal mb-2">Incomplétée
                         <svg data-popover-target="cpc-info" data-popover-placement="bottom" class="w-3 h-3 text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
@@ -134,7 +134,7 @@
                             <div data-popper-arrow></div>
                         </div>
                     </h5>
-                    <p class="text-gray-900 dark:text-white text-2xl leading-none font-bold">$5.40</p>
+                    <p class="text-gray-900 dark:text-white text-2xl leading-none font-bold">{{ $incompletedPersonalPlannings }}</p>
                 </div>
             </div>
             <div>
@@ -177,6 +177,10 @@
 
 <script>
 
+    let completedPersonalPlanningsByWeek = @json($completedPersonalPlanningsByWeek);
+    let incompletedPersonalPlanningsByWeek = @json($incompletedPersonalPlanningsByWeek);
+    let days = @json($days);
+    console.log(incompletedPersonalPlanningsByWeek);
 
     const options = {
         chart: {
@@ -214,14 +218,14 @@
         },
         series: [
             {
-                name: "Clicks",
-                data: [6500, 6418, 6456, 6526, 6356, 6456],
+                name: "Taches Complétées",
+                data: completedPersonalPlanningsByWeek,
                 color: "#1A56DB",
             },
             {
-                name: "CPC",
-                data: [6456, 6356, 6526, 6332, 6418, 6500],
-                color: "#7E3AF2",
+                name: "Taches Incomplétées",
+                data: incompletedPersonalPlanningsByWeek,
+                color: "#F05252",
             },
         ],
         legend: {
@@ -231,7 +235,7 @@
             curve: 'smooth'
         },
         xaxis: {
-            categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb'],
+            categories: days /*['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb']*/,
             labels: {
                 show: true,
                 style: {

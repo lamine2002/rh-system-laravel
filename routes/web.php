@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,12 +59,71 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
         $completedPersonalPlannings = auth()->user()->staff()->first()->planning()->where('status', 'Complétée')->count();
         // nombre de tache personnelles incompletees
         $incompletedPersonalPlannings = auth()->user()->staff()->first()->planning()->where('status', 'Incomplétée')->count();
+
+        /*
+         * Liste des taches personnelles completees de chaque jour de chaque semaine pour mon graphique
+         * sous cette forme: [2, 0, 2, 4, 1, 7, 3],
+         * cet forme signifie que j'ai 2 taches completees le lundi, 0 le mardi, 2 le mercredi, 4 le jeudi, 1 le vendredi, 7 le samedi et 3 le dimanche de la semaine actuelle
+         * */
+        $completedPersonalPlanningsByWeek = auth()->user()->staff()->first()->planning()->where('status', 'Complétée')->get()->groupBy(function ($planning) {
+            return Carbon::parse($planning->date)->format('w');
+        })->map->count();
+
+// je veux que les jours de la semaine soient en ordre
+        $completedPersonalPlanningsByWeek = collect([
+            $completedPersonalPlanningsByWeek[1] ?? 0,
+            $completedPersonalPlanningsByWeek[2] ?? 0,
+            $completedPersonalPlanningsByWeek[3] ?? 0,
+            $completedPersonalPlanningsByWeek[4] ?? 0,
+            $completedPersonalPlanningsByWeek[5] ?? 0,
+            $completedPersonalPlanningsByWeek[6] ?? 0,
+            $completedPersonalPlanningsByWeek[0] ?? 0,
+        ]);
+
+        /*
+         * Liste des taches personnelles incompletees de chaque jour de chaque semaine pour mon graphique
+         * sous cette forme: [2, 0, 2, 4, 1, 7, 3],
+         * cet forme signifie que j'ai 2 taches incompletees le lundi, 0 le mardi, 2 le mercredi, 4 le jeudi, 1 le vendredi, 7 le samedi et 3 le dimanche de la semaine actuelle
+         * */
+        $incompletedPersonalPlanningsByWeek = auth()->user()->staff()->first()->planning()->where('status', 'Incomplétée')->get()->groupBy(function ($planning) {
+            return Carbon::parse($planning->date)->format('w');
+        })->map->count();
+
+// je veux que les jours de la semaine soient en ordre
+        $incompletedPersonalPlanningsByWeek = collect([
+            $incompletedPersonalPlanningsByWeek[1] ?? 0,
+            $incompletedPersonalPlanningsByWeek[2] ?? 0,
+            $incompletedPersonalPlanningsByWeek[3] ?? 0,
+            $incompletedPersonalPlanningsByWeek[4] ?? 0,
+            $incompletedPersonalPlanningsByWeek[5] ?? 0,
+            $incompletedPersonalPlanningsByWeek[6] ?? 0,
+            $incompletedPersonalPlanningsByWeek[0] ?? 0,
+        ]);
+
+        /*liste de tous les jours de la semaine actuelle ou je veux afficher mes taches et ou l'on se trouve
+         * sous cette forme: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb']
+         * */
+        $days = collect([
+            Carbon::now()->startOfWeek()->format('d M'),
+            Carbon::now()->startOfWeek()->addDay()->format('d M'),
+            Carbon::now()->startOfWeek()->addDays(2)->format('d M'),
+            Carbon::now()->startOfWeek()->addDays(3)->format('d M'),
+            Carbon::now()->startOfWeek()->addDays(4)->format('d M'),
+            Carbon::now()->startOfWeek()->addDays(5)->format('d M'),
+            Carbon::now()->endOfWeek()->format('d M'),
+        ]);
+
+
         return view('rh.home',
             [
                 'completedTeamPlannings' => $completedTeamPlannings,
                 'approvedAbsences' => $approvedAbsences,
                 'completedPersonalPlannings' => $completedPersonalPlannings,
-                'incompletedPersonalPlannings' => $incompletedPersonalPlannings
+                'incompletedPersonalPlannings' => $incompletedPersonalPlannings,
+                'completedPersonalPlanningsByWeek' => $completedPersonalPlanningsByWeek,
+                'incompletedPersonalPlanningsByWeek' => $incompletedPersonalPlanningsByWeek,
+                'days' => $days
+
             ]
         );
     })->name('home');
