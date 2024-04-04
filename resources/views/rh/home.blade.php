@@ -167,7 +167,7 @@
         <div id="line-chart"></div>
         <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-2.5">
             <div class="pt-5">
-                <p class="text-center text-gray-900 dark:text-white text-2xl leading-none font-bold">Liste des taches complétées et incomplétées</p>
+                <p class="text-center text-gray-900 dark:text-white text-2xl leading-none font-bold">Liste des taches complétées et incomplétées de {{ auth()->user()->name }}</p>
             </div>
         </div>
     </div>

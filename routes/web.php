@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -104,13 +104,13 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
          * sous cette forme: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb']
          * */
         $days = collect([
-            Carbon::now()->startOfWeek()->format('d M'),
-            Carbon::now()->startOfWeek()->addDay()->format('d M'),
-            Carbon::now()->startOfWeek()->addDays(2)->format('d M'),
-            Carbon::now()->startOfWeek()->addDays(3)->format('d M'),
-            Carbon::now()->startOfWeek()->addDays(4)->format('d M'),
-            Carbon::now()->startOfWeek()->addDays(5)->format('d M'),
-            Carbon::now()->endOfWeek()->format('d M'),
+            Carbon::now()->startOfWeek()->translatedFormat('jS F '),
+            Carbon::now()->startOfWeek()->addDay()->translatedFormat('jS F '),
+            Carbon::now()->startOfWeek()->addDays(2)->translatedFormat('jS F '),
+            Carbon::now()->startOfWeek()->addDays(3)->translatedFormat('jS F '),
+            Carbon::now()->startOfWeek()->addDays(4)->translatedFormat('jS F '),
+            Carbon::now()->startOfWeek()->addDays(5)->translatedFormat('jS F '),
+            Carbon::now()->endOfWeek()->translatedFormat('jS F '),
         ]);
 
 
