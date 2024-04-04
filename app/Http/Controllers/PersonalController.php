@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Absence;
 use App\Models\Document;
 use App\Models\Leave;
+use App\Models\Planning;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 
@@ -59,7 +60,7 @@ class PersonalController extends Controller
         if (!$team) {
             return view('rh.personal.team-planning');
         }
-        $plannings = $team->planning()->orderBy('date', 'desc')->paginate(10);
+        $plannings = $team->planning()->orderBy('date', 'desc')->get();
 //        dd($plannings);
 /*        je veux recuperer les plannings de l'equipe de l'utilisateur connecté
         sous cette forme:
@@ -93,6 +94,15 @@ class PersonalController extends Controller
 
 
 
-        return view('rh.personal.team-planning', compact('plannings'));
+        return view('rh.personal.team-planning',
+            [
+                'plannings' => $plannings,
+                'team' => $team,
+                'planning' => new Planning(),
+                'types' => ['Réunion', 'Tâche', 'Formation'],
+                'priorities' => ['Normal', 'Urgent', 'Très urgent'],
+                'statuses' => ['En attente', 'Incompletée', 'Complétée']
+            ]
+        );
     }
 }

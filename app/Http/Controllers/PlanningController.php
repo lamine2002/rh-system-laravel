@@ -39,7 +39,8 @@ class PlanningController extends Controller
     {
         $data = $request->validated();
         Planning::create($data);
-        return redirect()->route('rh.planning.index')->with('info', 'Le planning a bien été créé');
+//        route('rh.planning.index')
+        return redirect()->back()->with('info', 'Le planning a bien été créé');
     }
 
     public function edit(Planning $planning)
