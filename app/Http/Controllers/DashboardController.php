@@ -75,10 +75,59 @@ class DashboardController extends Controller
         }
 //        dd($planningIncompleted);
 
+        // nombre de team
+        $teams = Team::all()->count();
+
+        // nombre de planning de la semaine
+        $plannings = Planning::whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->get();
+        $planningsCount = $plannings->count();
+
+        // taux de completion des plannings de la semaine
+        $planningsCompleted = $plannings->where('status', 'Complétée')->count();
+        $planningsIncompleted = $plannings->where('status', 'Incomplétée')->count();
+        $planningsCompletedRate = $planningsCount > 0 ? ($planningsCompleted / $planningsCount) * 100 : 0;
+
+        // les 4 staffs avec le plus de taches completees de ce mois
+        $topStaffs = Planning::where('status', 'Complétée')
+            ->whereBetween('date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            ->where('team_id', null)
+            ->get()
+            ->groupBy('staff_id')
+            ->map(function ($plannings) {
+                return [
+                    'staff' => $plannings->first()->staff,
+                    'count' => $plannings->count(),
+                ];
+            })
+            ->sortByDesc('count')
+            ->take(4);
+
+//        dd($topStaffs);
+
+        $topTeams = Planning::where('status', 'Complétée')
+            ->whereBetween('date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+            /* et quand le staff aussi est a null*/
+            ->where('staff_id', null)
+            ->get()
+            ->groupBy('team_id')
+            ->map(function ($plannings) {
+                return [
+                    'team' => $plannings->first()->team,
+                    'count' => $plannings->count(),
+                ];
+            })
+            ->sortByDesc('count')
+            ->take(4);
+
         return view('rh.statistiques',
             [
                 'planningCompleted' => $planningCompleted,
                 'planningIncompleted' => $planningIncompleted,
+                'teams' => $teams,
+                'planningsCount' => $planningsCount,
+                'planningsCompletedRate' => $planningsCompletedRate,
+                'topStaffs' => $topStaffs,
+                'topTeams' => $topTeams,
             ]
         );
     }
