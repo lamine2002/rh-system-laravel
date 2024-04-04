@@ -40,7 +40,7 @@ class PlanningController extends Controller
         $data = $request->validated();
         Planning::create($data);
 //        route('rh.planning.index')
-        return redirect()->back()->with('info', 'Le planning a bien été créé');
+        return redirect()->back()->with('success', 'Le planning a bien été créé');
     }
 
     public function edit(Planning $planning)
@@ -66,12 +66,24 @@ class PlanningController extends Controller
     {
         $data = $request->validated();
         $planning->update($data);
-        return redirect()->route('rh.planning.index')->with('info', 'Le planning a bien été modifié');
+        return redirect()->route('rh.planning.index')->with('success', 'Le planning a bien été modifié');
     }
 
     public function destroy(Planning $planning)
     {
         $planning->delete();
-        return back()->with('info', 'Le planning a bien été supprimé');
+        return back()->with('success', 'Le planning a bien été supprimé');
+    }
+
+    public function complete(Planning $planning)
+    {
+        $planning->update(['status' => 'Complétée']);
+        return back()->with('success', 'Le planning a bien été complété');
+    }
+
+    public function incomplete(Planning $planning)
+    {
+        $planning->update(['status' => 'Incompletée']);
+        return back()->with('success', 'Le planning a bien été marqué comme incomplet');
     }
 }

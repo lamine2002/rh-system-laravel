@@ -84,6 +84,11 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
         ->name('leave.approve');
     Route::put('/leave/{leave}/reject', [\App\Http\Controllers\LeaveController::class, 'reject'])
         ->name('leave.reject');
+
+    Route::put('planning/{planning}/complete', [\App\Http\Controllers\PlanningController::class, 'complete'])
+        ->name('complete-team-planning');
+    Route::put('planning/{planning}/incomplete', [\App\Http\Controllers\PlanningController::class, 'incomplete'])
+        ->name('incomplete-team-planning');
 });
 
 

@@ -38,7 +38,7 @@ class PlanningPolicy
      */
     public function update(User $user, Planning $planning): bool
     {
-        return $user->role === 'admin' || $user->role === 'manager' || $user->staff_id === $planning->staff_id || $user->staff_id === $planning->team->leader_id || $user->staff_id === $planning->team->supervisor_id;
+        return ($user->role === 'admin' || $user->role === 'manager' || $user->staff_id === $planning->staff_id || $user->staff_id === $planning->team->leader_id || $user->staff_id === $planning->team->supervisor_id) && $planning->status === 'En attente';
     }
 
     /**

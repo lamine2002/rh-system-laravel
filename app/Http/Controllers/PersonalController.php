@@ -82,11 +82,13 @@ class PersonalController extends Controller
                 'end' => $planning->end_date/*.'T'.$planning->end_time*/,
                 // priorité de la tache
                 'backgroundColor' => match ($planning->priority) {
-                    'Normal' => '#007bff',
+                    'Normal' => '#057A55',
                     'Urgent' => '#ffc107',
                     'Très urgent' => '#dc3545',
                     default => '#28a745',
                 },
+                // url du show de la tache
+                'url' => route('rh.planning.show', $planning->id)
             ];
         });
 //        dd($plannings);
