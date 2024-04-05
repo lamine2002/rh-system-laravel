@@ -8,6 +8,7 @@ use App\Models\Talent;
 use App\Models\TalentType;
 use App\Models\Team;
 use App\Models\User;
+use App\Notifications\SendRegistrationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -71,7 +72,7 @@ class StaffController extends Controller
         ]);
         $staff->talents()->sync($request->validated('talents'));
         if ($data['status'] == 'active') {
-            User::create([
+           $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make('passer'), // default password (passer)
@@ -79,6 +80,11 @@ class StaffController extends Controller
                 'staff_id' => $staff->id
 
             ]);
+
+           if ($user){
+               $user->notify(new SendRegistrationNotification());
+           }
+
         }
         return redirect()->route('rh.staff.index')->with('success', 'Membre du personnel ajouté avec succès.');
     }
@@ -140,7 +146,7 @@ class StaffController extends Controller
             ]);
         }
         if ($user === null && $data['status'] === 'active') {
-            User::create([
+            $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make('passer'), // default password (passer)
@@ -148,6 +154,10 @@ class StaffController extends Controller
                 'staff_id' => $staff->id
 
             ]);
+
+            if ($user){
+                $user->notify(new SendRegistrationNotification());
+            }
         }
         if ($user !== null && $data['status'] === 'inactive') {
             $user->delete();
