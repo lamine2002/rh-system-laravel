@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Planning;
+use App\Models\Staff;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -119,6 +120,32 @@ class DashboardController extends Controller
             ->sortByDesc('count')
             ->take(4);
 
+            // les differentes pourcentages du personnel ayant les ages suivants 20+, 30+, 40+ et 50+
+            $staffs = Staff::all();
+            $age = Carbon::now()->diffInYears($staffs->first()->date_of_birth);
+            $staffsCount = $staffs->count();
+            $staffs20 = $staffs->filter(function ($staff) {
+                return Carbon::now()->diffInYears($staff->date_of_birth) >= 20 && Carbon::now()->diffInYears($staff->date_of_birth) < 30;
+            });
+            $staffs20Rate = $staffs20->count() > 0 ? ($staffs20->count() / $staffsCount) * 100 : 0;
+
+            $staffs30 = $staffs->filter(function ($staff) {
+                return Carbon::now()->diffInYears($staff->date_of_birth) >= 30 && Carbon::now()->diffInYears($staff->date_of_birth) < 40;
+            });
+            $staffs30Rate = $staffs30->count() > 0 ? ($staffs30->count() / $staffsCount) * 100 : 0;
+
+            $staffs40 = $staffs->filter(function ($staff) {
+                return Carbon::now()->diffInYears($staff->date_of_birth) >= 40 && Carbon::now()->diffInYears($staff->date_of_birth) < 50;
+            });
+            $staffs40Rate = $staffs40->count() > 0 ? ($staffs40->count() / $staffsCount) * 100 : 0;
+
+            $staffs50 = $staffs->filter(function ($staff) {
+                return Carbon::now()->diffInYears($staff->date_of_birth) >= 50;
+            });
+            $staffs50Rate = $staffs50->count() > 0 ? ($staffs50->count() / $staffsCount) * 100 : 0;
+
+
+
         return view('rh.statistiques',
             [
                 'planningCompleted' => $planningCompleted,
@@ -128,6 +155,10 @@ class DashboardController extends Controller
                 'planningsCompletedRate' => $planningsCompletedRate,
                 'topStaffs' => $topStaffs,
                 'topTeams' => $topTeams,
+                'staffs20Rate' => $staffs20Rate,
+                'staffs30Rate' => $staffs30Rate,
+                'staffs40Rate' => $staffs40Rate,
+                'staffs50Rate' => $staffs50Rate,
             ]
         );
     }

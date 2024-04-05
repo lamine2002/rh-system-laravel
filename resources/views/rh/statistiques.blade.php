@@ -170,6 +170,41 @@
 
 
 
+{{--Audience Par age--}}
+<div class="mt-8 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+    <div class="w-full">
+        <h3 class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">Personnels de l'entreprise par age </h3>
+        <div class="flex items-center mb-2">
+            <div class="w-16 text-sm font-medium dark:text-white">50+</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{$staffs50Rate}}%"></div>
+            </div>
+        </div>
+        <div class="flex items-center mb-2">
+            <div class="w-16 text-sm font-medium dark:text-white">40+</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{$staffs40Rate}}%"></div>
+            </div>
+        </div>
+        <div class="flex items-center mb-2">
+            <div class="w-16 text-sm font-medium dark:text-white">30+</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{$staffs30Rate}}%"></div>
+            </div>
+        </div>
+        <div class="flex items-center mb-2">
+            <div class="w-16 text-sm font-medium dark:text-white">20+</div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{$staffs20Rate}}%"></div>
+            </div>
+        </div>
+    </div>
+    <div id="traffic-channels-chart" class="w-full"></div>
+</div>
+{{--Fin Audience Par age--}}
+
+
+
 <script>
     const planningCompleted = @json($planningCompleted);
     const planningIncompleted = @json($planningIncompleted);
