@@ -107,4 +107,10 @@ class PersonalController extends Controller
             ]
         );
     }
+
+    public function planning()
+    {
+        $plannings = Planning::where('staff_id', auth()->user()->staff_id)->orderBy('date', 'desc')->paginate(10);
+        return view('rh.personal.planning', compact('plannings'));
+    }
 }
