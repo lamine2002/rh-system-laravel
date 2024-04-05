@@ -139,4 +139,27 @@ class PersonalController extends Controller
         ELSE 3 END")->paginate(5);
         return view('rh.personal.planning', compact('plannings'));
     }
+
+    public function team()
+    {
+        $team = auth()->user()->staff->team()->first();
+//        dd($team);
+        // les plannings completes de l'equipe
+        $completedTeamPlannings = $team->planning()->where('status', 'Complétée')->get();
+//        dd($completedTeamPlannings);
+        // les plannings incompletes de l'equipe
+        $incompletedTeamPlannings = $team->planning()->where('status', 'Incomplétée')->get();
+//        dd($incompletedTeamPlannings);
+        // les membres de l'equipe sans le leader et le superviseur
+        $members = $team->staff()->where('id', '!=', $team->leader_id)->where('id', '!=', $team->supervisor_id)->get();
+//        dd($members);
+        return view('rh.personal.my-team',
+            [
+                'team' => $team,
+                'completedTeamPlannings' => $completedTeamPlannings,
+                'incompletedTeamPlannings' => $incompletedTeamPlannings,
+                'members' => $members
+            ]
+        );
+    }
 }

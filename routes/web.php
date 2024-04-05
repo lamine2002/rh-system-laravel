@@ -161,6 +161,9 @@ Route::prefix('rh')->name('rh.')->middleware('auth')->group(function (){
     Route::get('my-planning', [\App\Http\Controllers\PersonalController::class, 'planning'])
         ->name('my-planning');
 
+    Route::get('my-team', [\App\Http\Controllers\PersonalController::class, 'team'])
+        ->name('my-team');
+
     Route::resource('absences', \App\Http\Controllers\AbsenceController::class);
     Route::resource('leave', \App\Http\Controllers\LeaveController::class);
     Route::resource('contracts', \App\Http\Controllers\ContractController::class);
