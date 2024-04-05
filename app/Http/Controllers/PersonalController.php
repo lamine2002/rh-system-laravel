@@ -158,7 +158,12 @@ class PersonalController extends Controller
                 'team' => $team,
                 'completedTeamPlannings' => $completedTeamPlannings,
                 'incompletedTeamPlannings' => $incompletedTeamPlannings,
-                'members' => $members
+                'members' => $members,
+                'types' => ['Réunion', 'Tâche', 'Formation'],
+                'priorities' => ['Normal', 'Urgent', 'Très urgent'],
+                'statuses' => ['En attente', 'Incompletée', 'Complétée'],
+                'planning' => new Planning(),
+                'staffs' => $members
             ]
         );
     }
