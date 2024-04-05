@@ -53,12 +53,12 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900 dark:text-white">
-                                    {{ $planning->staff_id }}
+                                    {{ $planning->staff_id ? $planning->staff->name : 'Non assigné' }}
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-900 dark:text-white">
-                                    {{ $planning->team_id }}
+                                    {{ $planning->team_id ? $planning->team->name : 'Non assigné' }}
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">

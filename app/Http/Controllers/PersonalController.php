@@ -120,11 +120,11 @@ class PersonalController extends Controller
          * */
         $today = Carbon::today();
         $tomorrow = Carbon::tomorrow();
-        $endOfWeek = Carbon::today()->endOfWeek();
+        $endOfWeek = Carbon::today()->endOfWeek(); // permet de recuperer la date de fin de la semaine actuelle
 
-        $plannings = auth()->user()->staff()->first()->planning()
-            ->whereDate('date', '>=', $today)
-            ->whereDate('date', '<=', $endOfWeek)
+        $plannings = auth()->user()->staff->planning()
+           /* ->whereDate('date', '>=', $today)
+            ->whereDate('date', '<=', $endOfWeek)*/
             ->orderByRaw("CASE
         WHEN date = '$today' THEN 1
         WHEN date = '$tomorrow' THEN 2
@@ -136,8 +136,7 @@ class PersonalController extends Controller
             ->orderByRaw("CASE
         WHEN priority = 'Très urgent' THEN 1
         WHEN priority = 'Urgent' THEN 2
-        ELSE 3 END")
-            ->paginate(10);
+        ELSE 3 END")->paginate(5);
         return view('rh.personal.planning', compact('plannings'));
     }
 }

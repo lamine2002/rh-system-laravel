@@ -77,6 +77,9 @@
         @endforeach
     </ol>
 
+    {{--Ajouter le link de la pagination--}}
+    <br>
+    {{ $plannings->links() }}
 
 @endsection
 
