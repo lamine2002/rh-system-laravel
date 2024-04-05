@@ -24,10 +24,55 @@
                         à rendre pour le {{ \Carbon\Carbon::parse($planning->end_date)->translatedFormat('l jS F Y') }}
                     @endif
                 </time>
-                </time>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $planning->task }}</h3>
-                <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ $planning->type }}</p>
-                <a href="{{ route('rh.planning.show', $planning->id) }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">View Details</a>
+                <dl>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Type</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">{{ $planning->type }}</dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Priorité</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                            @if($planning->priority == 'Très urgent')
+                                <span class="bg-red-500 text-white font-bold py-1 px-2 rounded-lg">{{ $planning->priority }}</span>
+                            @elseif($planning->priority == 'Urgent')
+                                <span class="bg-yellow-500 text-white font-bold py-1 px-2 rounded-lg">{{ $planning->priority }}</span>
+                            @else
+                                <span class="bg-green-500 text-white font-bold py-1 px-2 rounded-lg">{{ $planning->priority }}</span>
+                            @endif
+                        </dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Objet</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">{{ $planning->task }}</dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Statut</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2">
+                            @if($planning->status == 'En attente')
+                                <span class="bg-blue-500 text-white font-bold py-1 px-2 rounded-lg">{{ $planning->status }}</span>
+                            @elseif($planning->status == 'Complétée')
+                                <span class="bg-green-500 text-white font-bold py-1 px-2 rounded-lg">{{ $planning->status }}</span>
+                            @else
+                                {{--Cela veut dire Incompletée--}}
+                                <span class="bg-red-500 text-white font-bold py-1 px-2 rounded-lg">{{ $planning->status }}</span>
+                            @endif
+                        </dd>
+                    </div>
+                </dl>
+                @can('update', $planning)
+{{--                    @if(auth()->user()->staff_id === $planning->team->leader_id)--}}
+                        <form action="{{ route('rh.complete-team-planning', $planning->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg">Complétée</button>
+                        </form>
+                        <form action="{{ route('rh.incomplete-team-planning', $planning->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg">Incomplétée</button>
+                        </form>
+{{--                    @endif--}}
+                @endcan
             </li>
         @endforeach
     </ol>

@@ -7,6 +7,7 @@ use App\Models\Document;
 use App\Models\Leave;
 use App\Models\Planning;
 use App\Models\Staff;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PersonalController extends Controller
@@ -110,7 +111,33 @@ class PersonalController extends Controller
 
     public function planning()
     {
-        $plannings = Planning::where('staff_id', auth()->user()->staff_id)->orderBy('date', 'desc')->paginate(10);
+//        $plannings = Planning::where('staff_id', auth()->user()->staff_id)->orderBy('date', 'desc')->paginate(10);
+        /*
+         * trier selon la date de la tache d'abord ceux d'aujourd'hui puis ceux de demain et enfin ceux de la semaine
+         * Apres trier sur le statut et plus precisement sur le statut 'En attente' en premier
+         * Ensuite sur la priorité de la tache et plus precisement sur la priorité 'Très urgent', 'Urgent' et 'Normal'
+         * enfin paginer par 10
+         * */
+        $today = Carbon::today();
+        $tomorrow = Carbon::tomorrow();
+        $endOfWeek = Carbon::today()->endOfWeek();
+
+        $plannings = auth()->user()->staff()->first()->planning()
+            ->whereDate('date', '>=', $today)
+            ->whereDate('date', '<=', $endOfWeek)
+            ->orderByRaw("CASE
+        WHEN date = '$today' THEN 1
+        WHEN date = '$tomorrow' THEN 2
+        ELSE 3 END")
+            ->orderByRaw("CASE
+        WHEN status = 'En attente' THEN 1
+        WHEN status = 'Incompletée' THEN 2
+        ELSE 3 END")
+            ->orderByRaw("CASE
+        WHEN priority = 'Très urgent' THEN 1
+        WHEN priority = 'Urgent' THEN 2
+        ELSE 3 END")
+            ->paginate(10);
         return view('rh.personal.planning', compact('plannings'));
     }
 }
