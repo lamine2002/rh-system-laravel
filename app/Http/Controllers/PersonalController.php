@@ -61,7 +61,7 @@ class PersonalController extends Controller
         if (!$team) {
             return view('rh.personal.team-planning');
         }
-        $plannings = $team->planning()->orderBy('date', 'desc')->get();
+            $plannings = $team->planning()->orderBy('date', 'desc')->get();
 //        dd($plannings);
 /*        je veux recuperer les plannings de l'equipe de l'utilisateur connecté
         sous cette forme:
